@@ -1,9 +1,9 @@
 package com.medisync.channeldoc_api.repository;
 
-import com.medisync.channeldoc_api.model.User;
+import com.medisync.channeldoc_api.model.Appointment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
 }
