@@ -1,8 +1,8 @@
 package com.medisync.channeldoc_api.service;
 
-import org.springframework.stereotype.Service;
+import com.medisync.channeldoc_api.dto.request.HospitalAdminRequestDto;
+import com.medisync.channeldoc_api.dto.response.UserResponseDto;
 
-@Service
-public class UserService {
-
+public interface UserService {
+    UserResponseDto createHospitalAdmin(HospitalAdminRequestDto request);
 }
