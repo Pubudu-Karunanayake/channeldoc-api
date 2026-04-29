@@ -23,7 +23,7 @@ public class AdminSeeder implements CommandLineRunner {
                     .fullName("Super Admin")
                     .email("pubudu.karunanayake01@gmail.com")
                     .authProvider(AuthProvider.LOCAL)
-                    .roles(Set.of(UserRole.ROLE_SUPERADMIN))
+                    .roles(Set.of(UserRole.ROLE_SUPER_ADMIN))
                     .build();
             userRepository.save(superAdmin);
         }

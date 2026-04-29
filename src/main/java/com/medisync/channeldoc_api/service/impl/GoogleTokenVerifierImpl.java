@@ -32,26 +32,19 @@ public class GoogleTokenVerifierImpl implements GoogleTokenVerifier {
      */
     @Override
     public GoogleIdToken.Payload verifyToken(String idTokenString) {
-        System.out.println("1");
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(
                 new NetHttpTransport(), GsonFactory.getDefaultInstance())
                 .setAudience(Collections.singletonList(clientId))
                 .build();
 
-                System.out.println("2");
-        GoogleIdToken idToken;
-        System.out.println("3");            
+        GoogleIdToken idToken;          
         try {
-            System.out.println("4");
-            idToken = verifier.verify(idTokenString);
-            System.out.println("5");    
+            idToken = verifier.verify(idTokenString);  
         } catch (GeneralSecurityException | IOException e) {
-            System.out.println("6");
             throw new InvalidTokenException("Failed to verify Google ID token", e);
         }
 
         if (idToken == null) {
-            System.out.println("7");
             throw new InvalidTokenException("Invalid Google ID token: verification failed");
         }
 
@@ -60,11 +53,8 @@ public class GoogleTokenVerifierImpl implements GoogleTokenVerifier {
         // Ensure email is verified by Google
         Boolean emailVerified = payload.getEmailVerified();
         if (emailVerified == null || !emailVerified) {
-            System.out.println("8");
             throw new InvalidTokenException("Google account email is not verified");
         }
-
-        System.out.println("9");
         return payload;
     }
 }
