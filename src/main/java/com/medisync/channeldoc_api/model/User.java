@@ -1,5 +1,6 @@
 package com.medisync.channeldoc_api.model;
 
+import com.medisync.channeldoc_api.model.enums.AuthProvider;
 import com.medisync.channeldoc_api.model.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
@@ -17,8 +18,19 @@ public class User {
   private Long id;
 
   private String fullName;
+
+  @Column(unique = true, nullable = false)
   private String email;
+
   private String profileImageUrl;
+
+  @Column(unique = true)
+  private String googleId;
+
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
+  @Builder.Default
+  private AuthProvider authProvider = AuthProvider.LOCAL;
 
   @ManyToOne
   @JoinColumn(name = "hospital_id")
