@@ -18,6 +18,8 @@ public class DoctorProfile {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(nullable = false, unique = true)
     private String slmcNumber;
+
     private String specialization;
 }
