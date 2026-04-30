@@ -12,10 +12,10 @@ import java.time.LocalDate;
 @Builder
 public class PatientProfile {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne
+    @MapsId
     @JoinColumn(name = "user_id")
     private User user;
 

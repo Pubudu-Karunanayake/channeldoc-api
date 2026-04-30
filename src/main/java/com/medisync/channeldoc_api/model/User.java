@@ -17,6 +17,7 @@ public class User {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(nullable = false)
   private String fullName;
 
   @Column(unique = true, nullable = false)
@@ -31,6 +32,10 @@ public class User {
   @Column(nullable = false)
   @Builder.Default
   private AuthProvider authProvider = AuthProvider.LOCAL;
+
+  @Column(nullable = false)
+  @Builder.Default
+  private Boolean isActive = true;
 
   @ManyToOne
   @JoinColumn(name = "hospital_id")
