@@ -3,6 +3,7 @@ package com.medisync.channeldoc_api.model;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
+import com.medisync.channeldoc_api.model.enums.Gender;
 
 @Entity
 @Table(name = "patient_profiles")
@@ -20,6 +21,9 @@ public class PatientProfile {
     private User user;
 
     private LocalDate dateOfBirth;
-    private String gender;
+    
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+    
     private String contactNumber;
 }
