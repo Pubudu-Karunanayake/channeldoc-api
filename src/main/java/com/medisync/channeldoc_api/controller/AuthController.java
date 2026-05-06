@@ -26,7 +26,6 @@ public class AuthController {
     @PostMapping("/google")
     public ResponseEntity<AuthResponseDto> authenticateWithGoogle(
             @Valid @RequestBody GoogleAuthRequestDto request) {
-                System.out.println("I am in controller");
         AuthResponseDto response = authService.authenticateWithGoogle(request);
         return ResponseEntity.ok(response);
     }
