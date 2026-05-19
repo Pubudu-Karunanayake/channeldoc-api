@@ -42,10 +42,6 @@ public class Appointment {
     @JoinColumn(name = "doctor_id")
     private DoctorProfile doctor;
 
-    @ManyToOne
-    @JoinColumn(name = "patient_id")
-    private PatientProfile patient;
-
     @Enumerated(EnumType.STRING)
     @JdbcTypeCode(Types.VARCHAR)
     @Column(name = "status")
@@ -58,6 +54,15 @@ public class Appointment {
     @JdbcTypeCode(Types.VARCHAR)
     @Column(name = "payment_status")
     private PaymentStatus paymentStatus;
+
+    @Column(name = "booked_by_user_id")
+    private Long bookedByUserId;
+
+    @Column(name = "is_primary_patient")
+    private Boolean isPrimaryPatient;
+
+    @Column(name = "dependent_patient_id")
+    private Long dependentPatientId;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
