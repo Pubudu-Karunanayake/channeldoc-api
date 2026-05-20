@@ -28,4 +28,8 @@ public class DependentProfile {
     
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @Builder.Default
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive = true;
 }
