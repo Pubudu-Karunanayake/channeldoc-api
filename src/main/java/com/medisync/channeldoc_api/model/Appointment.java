@@ -58,12 +58,6 @@ public class Appointment {
     @Column(name = "booked_by_user_id")
     private Long bookedByUserId;
 
-    @Column(name = "is_primary_patient")
-    private Boolean isPrimaryPatient;
-
-    @Column(name = "dependent_patient_id")
-    private Long dependentPatientId;
-
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
