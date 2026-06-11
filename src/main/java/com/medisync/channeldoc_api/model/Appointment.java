@@ -55,8 +55,8 @@ public class Appointment {
     @Column(name = "payment_status")
     private PaymentStatus paymentStatus;
 
-    @Column(name = "booked_by_user_id")
-    private Long bookedByUserId;
+    @Column(name = "patient_id")
+    private Long patientId;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
