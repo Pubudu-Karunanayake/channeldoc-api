@@ -21,7 +21,7 @@ public class DoctorController {
     private final DoctorService doctorService;
 
     @PostMapping
-    @PreAuthorize("hasRole('HOSPITAL_ADMIN')")
+    @PreAuthorize("hasRole('HOSPITAL_MANAGEMENT')")
     public ResponseEntity<DoctorResponseDto> createDoctor(@Valid @RequestBody DoctorRequestDto request) {
         DoctorResponseDto createdDoctor = doctorService.createDoctor(request);
         return new ResponseEntity<>(createdDoctor, HttpStatus.CREATED);
