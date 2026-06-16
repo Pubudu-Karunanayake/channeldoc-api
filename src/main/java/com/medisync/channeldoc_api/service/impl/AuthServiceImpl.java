@@ -18,8 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Set;
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -90,21 +88,6 @@ public class AuthServiceImpl implements AuthService {
         }
 
         return user;
-    }
-
-    private User createNewUser(String googleId, String email, String fullName, String pictureUrl) {
-        User newUser = User.builder()
-                .googleId(googleId)
-                .email(email)
-                .fullName(fullName)
-                .profileImageUrl(pictureUrl)
-                .authProvider(AuthProvider.GOOGLE)
-                .roles(Set.of(UserRole.ROLE_PATIENT))
-                .build();
-
-        User savedUser = userRepository.save(newUser);
-        log.info("Created new user via Google Sign-In: {}", savedUser.getEmail());
-        return savedUser;
     }
 
     private AuthResponseDto buildAuthResponse(String token, User user) {
