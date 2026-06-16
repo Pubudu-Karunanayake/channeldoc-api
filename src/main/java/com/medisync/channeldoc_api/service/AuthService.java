@@ -1,6 +1,7 @@
 package com.medisync.channeldoc_api.service;
 
 import com.medisync.channeldoc_api.dto.request.GoogleAuthRequestDto;
+import com.medisync.channeldoc_api.dto.request.GooglePatientRegistrationRequestDto;
 import com.medisync.channeldoc_api.dto.response.AuthResponseDto;
 
 public interface AuthService {
@@ -13,4 +14,15 @@ public interface AuthService {
      * @return AuthResponse with application JWT and user info
      */
     AuthResponseDto authenticateWithGoogle(GoogleAuthRequestDto request);
+
+    /**
+     * Registers a new patient using a Google ID token and additional profile details.
+     * Verifies the token, delegates user and profile creation to PatientService,
+     * and returns an application JWT.
+     *
+     * @param request containing the Google ID token and patient profile details
+     * @return AuthResponse with application JWT and user info
+     */
+    AuthResponseDto registerPatientWithGoogle(GooglePatientRegistrationRequestDto request);
 }
+

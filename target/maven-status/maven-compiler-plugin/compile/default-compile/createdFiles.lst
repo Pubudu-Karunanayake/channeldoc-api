@@ -15,6 +15,7 @@ com/medisync/channeldoc_api/dto/request/HospitalRequestDto$HospitalRequestDtoBui
 com/medisync/channeldoc_api/model/User$UserBuilder.class
 com/medisync/channeldoc_api/dto/request/HospitalManagementRequestDto.class
 com/medisync/channeldoc_api/model/TimeSlot$TimeSlotBuilder.class
+com/medisync/channeldoc_api/dto/request/GooglePatientRegistrationRequestDto.class
 com/medisync/channeldoc_api/controller/MasterScheduleController.class
 com/medisync/channeldoc_api/repository/UserRepository.class
 com/medisync/channeldoc_api/model/Hospital$HospitalBuilder.class
@@ -75,6 +76,7 @@ com/medisync/channeldoc_api/ChanneldocApiApplication.class
 com/medisync/channeldoc_api/exception/ErrorResponse$ErrorResponseBuilder.class
 com/medisync/channeldoc_api/dto/request/DoctorRequestDto.class
 com/medisync/channeldoc_api/controller/UserController.class
+com/medisync/channeldoc_api/exception/UserAlreadyExistsException.class
 com/medisync/channeldoc_api/model/enums/Gender.class
 com/medisync/channeldoc_api/service/HospitalAdminService.class
 com/medisync/channeldoc_api/dto/request/MasterScheduleRequestDto.class

@@ -10,6 +10,7 @@
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/controller/UserController.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/dto/request/DoctorRequestDto.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/dto/request/GoogleAuthRequestDto.java
+/home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/dto/request/GooglePatientRegistrationRequestDto.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/dto/request/HospitalAdminRequestDto.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/dto/request/HospitalManagementRequestDto.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/dto/request/HospitalRequestDto.java
@@ -28,6 +29,7 @@
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/exception/GlobalExceptionHandler.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/exception/InvalidTokenException.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/exception/ResourceNotFoundException.java
+/home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/exception/UserAlreadyExistsException.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/model/Appointment.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/model/DailySession.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/model/DoctorProfile.java
