@@ -2,7 +2,7 @@ package com.medisync.channeldoc_api.service.impl;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.medisync.channeldoc_api.dto.request.GoogleAuthRequestDto;
-import com.medisync.channeldoc_api.dto.request.GooglePatientRegistrationRequestDto;
+import com.medisync.channeldoc_api.dto.request.PatientRegistrationRequestDto;
 import com.medisync.channeldoc_api.dto.response.AuthResponseDto;
 import com.medisync.channeldoc_api.exception.ResourceNotFoundException;
 import com.medisync.channeldoc_api.model.User;
@@ -50,7 +50,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public AuthResponseDto registerPatientWithGoogle(GooglePatientRegistrationRequestDto request) {
+    public AuthResponseDto registerPatientWithGoogle(PatientRegistrationRequestDto request) {
         // 1. Verify Google ID token (signature, audience, expiry, email_verified)
         GoogleIdToken.Payload payload = googleTokenVerifier.verifyToken(request.getIdToken());
 

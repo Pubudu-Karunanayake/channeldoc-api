@@ -1,7 +1,7 @@
 package com.medisync.channeldoc_api.controller;
 
 import com.medisync.channeldoc_api.dto.request.GoogleAuthRequestDto;
-import com.medisync.channeldoc_api.dto.request.GooglePatientRegistrationRequestDto;
+import com.medisync.channeldoc_api.dto.request.PatientRegistrationRequestDto;
 import com.medisync.channeldoc_api.dto.response.AuthResponseDto;
 import com.medisync.channeldoc_api.service.AuthService;
 import jakarta.validation.Valid;
@@ -40,7 +40,7 @@ public class AuthController {
      */
     @PostMapping("/google/signup")
     public ResponseEntity<AuthResponseDto> registerPatientWithGoogle(
-            @Valid @RequestBody GooglePatientRegistrationRequestDto request) {
+            @Valid @RequestBody PatientRegistrationRequestDto request) {
         AuthResponseDto response = authService.registerPatientWithGoogle(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }

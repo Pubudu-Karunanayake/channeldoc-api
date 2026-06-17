@@ -1,9 +1,9 @@
 com/medisync/channeldoc_api/service/SessionGenerationService.class
-com/medisync/channeldoc_api/dto/request/PatientProfileRequestDto.class
 com/medisync/channeldoc_api/model/DoctorProfile.class
 com/medisync/channeldoc_api/security/SecurityConfig.class
 com/medisync/channeldoc_api/controller/HospitalManagementController.class
 com/medisync/channeldoc_api/dto/response/HospitalResponseDto.class
+com/medisync/channeldoc_api/dto/request/PatientRegistrationRequestDto.class
 com/medisync/channeldoc_api/model/MasterSchedule$MasterScheduleBuilder.class
 com/medisync/channeldoc_api/model/Appointment$AppointmentBuilder.class
 com/medisync/channeldoc_api/controller/AppointmentController.class
@@ -18,7 +18,6 @@ com/medisync/channeldoc_api/model/User$UserBuilder.class
 com/medisync/channeldoc_api/dto/request/HospitalManagementRequestDto.class
 com/medisync/channeldoc_api/model/TimeSlot$TimeSlotBuilder.class
 com/medisync/channeldoc_api/event/AppointmentBookedEvent.class
-com/medisync/channeldoc_api/dto/request/GooglePatientRegistrationRequestDto.class
 com/medisync/channeldoc_api/controller/MasterScheduleController.class
 com/medisync/channeldoc_api/repository/UserRepository.class
 com/medisync/channeldoc_api/service/impl/SessionGenerationServiceImpl.class

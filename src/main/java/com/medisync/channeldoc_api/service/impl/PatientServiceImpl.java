@@ -1,7 +1,7 @@
 package com.medisync.channeldoc_api.service.impl;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.medisync.channeldoc_api.dto.request.GooglePatientRegistrationRequestDto;
+import com.medisync.channeldoc_api.dto.request.PatientRegistrationRequestDto;
 import com.medisync.channeldoc_api.exception.UserAlreadyExistsException;
 import com.medisync.channeldoc_api.model.PatientProfile;
 import com.medisync.channeldoc_api.model.User;
@@ -27,7 +27,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     @Transactional
-    public User registerPatientViaGoogle(GoogleIdToken.Payload payload, GooglePatientRegistrationRequestDto request) {
+    public User registerPatientViaGoogle(GoogleIdToken.Payload payload, PatientRegistrationRequestDto request) {
         String email = payload.getEmail();
 
         // 1. Validate email uniqueness
@@ -39,7 +39,7 @@ public class PatientServiceImpl implements PatientService {
         User newUser = User.builder()
                 .googleId(payload.getSubject())
                 .email(email)
-                .fullName((String) payload.get("name"))
+                .fullName(request.getName()) // Use name from DTO instead of Google's name
                 .profileImageUrl((String) payload.get("picture"))
                 .authProvider(AuthProvider.GOOGLE)
                 .roles(Set.of(UserRole.ROLE_PATIENT))

@@ -1,7 +1,7 @@
 package com.medisync.channeldoc_api.service;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.medisync.channeldoc_api.dto.request.GooglePatientRegistrationRequestDto;
+import com.medisync.channeldoc_api.dto.request.PatientRegistrationRequestDto;
 import com.medisync.channeldoc_api.model.User;
 
 public interface PatientService {
@@ -15,6 +15,6 @@ public interface PatientService {
      * @param request the registration request containing patient profile details
      * @return the saved User entity
      */
-    User registerPatientViaGoogle(GoogleIdToken.Payload payload, GooglePatientRegistrationRequestDto request);
+    User registerPatientViaGoogle(GoogleIdToken.Payload payload, PatientRegistrationRequestDto request);
 }
 

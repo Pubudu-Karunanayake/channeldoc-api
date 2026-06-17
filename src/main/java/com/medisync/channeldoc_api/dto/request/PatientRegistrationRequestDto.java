@@ -13,7 +13,10 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GooglePatientRegistrationRequestDto {
+public class PatientRegistrationRequestDto {
+
+    @NotBlank(message = "Name is required")
+    private String name;
 
     @NotBlank(message = "Google ID token is required")
     private String idToken;
