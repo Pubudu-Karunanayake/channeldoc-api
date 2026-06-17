@@ -1,9 +1,9 @@
 package com.medisync.channeldoc_api.controller;
 
-import com.medisync.channeldoc_api.dto.request.MasterScheduleRequestDto;
-import com.medisync.channeldoc_api.dto.response.MasterScheduleResponseDto;
+import com.medisync.channeldoc_api.dto.request.AppointmentBookingRequestDto;
+import com.medisync.channeldoc_api.dto.response.AppointmentResponseDto;
 import com.medisync.channeldoc_api.model.User;
-import com.medisync.channeldoc_api.service.MasterScheduleService;
+import com.medisync.channeldoc_api.service.AppointmentBookingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,19 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/master-schedules")
+@RequestMapping("/api/appointments")
 @RequiredArgsConstructor
-public class MasterScheduleController {
+public class AppointmentController {
 
-    private final MasterScheduleService masterScheduleService;
+    private final AppointmentBookingService appointmentBookingService;
 
-    @PostMapping
-    //@PreAuthorize("hasRole('HOSPITAL_MANAGEMENT')")
-    @PreAuthorize("hasAnyRole('HOSPITAL_MANAGEMENT', 'SUPER_ADMIN')")
-    public ResponseEntity<MasterScheduleResponseDto> createMasterSchedule(
-            @Valid @RequestBody MasterScheduleRequestDto request,
+    @PostMapping("/book")
+    @PreAuthorize("hasRole('PATIENT')")
+    public ResponseEntity<AppointmentResponseDto> bookAppointment(
+            @Valid @RequestBody AppointmentBookingRequestDto request,
             @AuthenticationPrincipal User user) {
-        MasterScheduleResponseDto response = masterScheduleService.createMasterSchedule(request, user);
+        AppointmentResponseDto response = appointmentBookingService.bookAppointment(request, user);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }
