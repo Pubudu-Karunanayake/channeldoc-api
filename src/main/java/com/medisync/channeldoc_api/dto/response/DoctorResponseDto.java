@@ -1,5 +1,6 @@
 package com.medisync.channeldoc_api.dto.response;
 
+import com.medisync.channeldoc_api.model.enums.Specialization;
 import com.medisync.channeldoc_api.model.enums.UserRole;
 import lombok.Builder;
 import lombok.Data;
@@ -17,5 +18,5 @@ public class DoctorResponseDto {
     private Boolean isActive;
     
     private String slmcNumber;
-    private String specialization;
+    private Specialization specialization;
 }

@@ -95,4 +95,5 @@ com/medisync/channeldoc_api/model/DailySession.class
 com/medisync/channeldoc_api/dto/response/PatientProfileResponseDto.class
 com/medisync/channeldoc_api/dto/response/PatientProfileResponseDto$PatientProfileResponseDtoBuilder.class
 com/medisync/channeldoc_api/repository/DoctorProfileRepository.class
+com/medisync/channeldoc_api/model/enums/Specialization.class
 com/medisync/channeldoc_api/dto/response/HospitalManagementResponseDto$HospitalManagementResponseDtoBuilder.class
