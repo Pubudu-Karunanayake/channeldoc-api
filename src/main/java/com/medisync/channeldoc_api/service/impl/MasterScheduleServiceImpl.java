@@ -10,8 +10,10 @@ import com.medisync.channeldoc_api.model.User;
 import com.medisync.channeldoc_api.repository.DoctorProfileRepository;
 import com.medisync.channeldoc_api.repository.MasterScheduleRepository;
 import com.medisync.channeldoc_api.service.MasterScheduleService;
+import com.medisync.channeldoc_api.service.SessionGenerationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,8 +21,10 @@ public class MasterScheduleServiceImpl implements MasterScheduleService {
 
     private final MasterScheduleRepository masterScheduleRepository;
     private final DoctorProfileRepository doctorProfileRepository;
+    private final SessionGenerationService sessionGenerationService;
 
     @Override
+    @Transactional
     public MasterScheduleResponseDto createMasterSchedule(MasterScheduleRequestDto request, User user) {
         Hospital hospital = user.getHospital();
         if (hospital == null) {
@@ -42,6 +46,9 @@ public class MasterScheduleServiceImpl implements MasterScheduleService {
 
         MasterSchedule savedSchedule = masterScheduleRepository.save(masterSchedule);
 
+        // Trigger initial 14-day session generation
+        sessionGenerationService.generateSessionsForSchedule(savedSchedule, 14);
+
         return MasterScheduleResponseDto.builder()
                 .id(savedSchedule.getId())
                 .hospitalId(savedSchedule.getHospital().getId())
@@ -54,3 +61,4 @@ public class MasterScheduleServiceImpl implements MasterScheduleService {
                 .build();
     }
 }
+
