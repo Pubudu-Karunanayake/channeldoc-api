@@ -24,11 +24,13 @@ public class GoogleTokenVerifierImpl implements GoogleTokenVerifier {
 
     /**
      * Verifies the Google ID token and returns the payload.
-     * Performs signature verification, audience check, issuer check, and expiry check.
+     * Performs signature verification, audience check, issuer check, and expiry
+     * check.
      *
      * @param idTokenString the raw ID token string from the frontend
      * @return the verified token payload containing user info
-     * @throws InvalidTokenException if the token is invalid, expired, or tampered with
+     * @throws InvalidTokenException if the token is invalid, expired, or tampered
+     *                               with
      */
     @Override
     public GoogleIdToken.Payload verifyToken(String idTokenString) {
@@ -37,9 +39,9 @@ public class GoogleTokenVerifierImpl implements GoogleTokenVerifier {
                 .setAudience(Collections.singletonList(clientId))
                 .build();
 
-        GoogleIdToken idToken;          
+        GoogleIdToken idToken;
         try {
-            idToken = verifier.verify(idTokenString);  
+            idToken = verifier.verify(idTokenString);
         } catch (GeneralSecurityException | IOException e) {
             throw new InvalidTokenException("Failed to verify Google ID token", e);
         }

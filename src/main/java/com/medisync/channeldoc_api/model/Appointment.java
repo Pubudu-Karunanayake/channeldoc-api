@@ -18,7 +18,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Table(name = "appointments", indexes = {
         @Index(name = "idx_patient", columnList = "patient_id"),
         @Index(name = "idx_doctor", columnList = "doctor_id"),
-        @Index(name = "idx_hospital_doctor", columnList = "hospital_id, doctor_id")
+        @Index(name = "idx_hospital_doctor", columnList = "hospital_id, doctor_id"),
+        @Index(name = "idx_appointment_number", columnList = "appointment_number")
 })
 @Data
 @NoArgsConstructor
@@ -29,6 +30,9 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "appointment_number", unique = true, nullable = false, updatable = false)
+    private String appointmentNumber;
 
     @ManyToOne
     @JoinColumn(name = "hospital_id")
@@ -55,8 +59,9 @@ public class Appointment {
     @Column(name = "payment_status")
     private PaymentStatus paymentStatus;
 
-    @Column(name = "booked_by_user_id")
-    private Long bookedByUserId;
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    private User patient;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)

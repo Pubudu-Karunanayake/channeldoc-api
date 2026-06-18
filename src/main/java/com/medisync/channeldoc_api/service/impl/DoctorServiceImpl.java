@@ -2,17 +2,25 @@ package com.medisync.channeldoc_api.service.impl;
 
 import com.medisync.channeldoc_api.dto.request.DoctorRequestDto;
 import com.medisync.channeldoc_api.dto.response.DoctorResponseDto;
+import com.medisync.channeldoc_api.dto.response.DoctorSearchResponseDto;
+import com.medisync.channeldoc_api.dto.response.RestPage;
 import com.medisync.channeldoc_api.exception.ResourceNotFoundException;
 import com.medisync.channeldoc_api.model.DoctorProfile;
 import com.medisync.channeldoc_api.model.Hospital;
 import com.medisync.channeldoc_api.model.User;
 import com.medisync.channeldoc_api.model.enums.AuthProvider;
+import com.medisync.channeldoc_api.model.enums.Specialization;
 import com.medisync.channeldoc_api.model.enums.UserRole;
 import com.medisync.channeldoc_api.repository.DoctorProfileRepository;
 import com.medisync.channeldoc_api.repository.HospitalRepository;
 import com.medisync.channeldoc_api.repository.UserRepository;
 import com.medisync.channeldoc_api.service.DoctorService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +28,7 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class DoctorServiceImpl implements DoctorService {
 
     private final UserRepository userRepository;
@@ -28,6 +37,7 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     @Transactional
+    @CacheEvict(value = "doctors_by_spec", allEntries = true)
     public DoctorResponseDto createDoctor(DoctorRequestDto request) {
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new IllegalArgumentException("User already exists with this email");
@@ -59,6 +69,9 @@ public class DoctorServiceImpl implements DoctorService {
 
         DoctorProfile savedProfile = doctorProfileRepository.save(doctorProfile);
 
+        log.info("Created doctor [{}] with specialization [{}] — Redis cache evicted",
+                savedUser.getFullName(), savedProfile.getSpecialization());
+
         return DoctorResponseDto.builder()
                 .id(savedUser.getId())
                 .fullName(savedUser.getFullName())
@@ -71,4 +84,35 @@ public class DoctorServiceImpl implements DoctorService {
                 .specialization(savedProfile.getSpecialization())
                 .build();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    @Cacheable(
+            value = "doctors_by_spec",
+            key = "#specialization.name() + '::' + #pageable.pageNumber + '::' + #pageable.pageSize"
+    )
+    public RestPage<DoctorSearchResponseDto> searchBySpecialization(Specialization specialization, Pageable pageable) {
+        log.info("Cache MISS — querying database for specialization [{}], page [{}], size [{}]",
+                specialization, pageable.getPageNumber(), pageable.getPageSize());
+
+        Page<DoctorSearchResponseDto> mappedPage = doctorProfileRepository
+                .findBySpecialization(specialization, pageable)
+                .map(this::mapToSearchDto);
+
+        return new RestPage<>(mappedPage);
+    }
+
+    private DoctorSearchResponseDto mapToSearchDto(DoctorProfile profile) {
+        User user = profile.getUser();
+        Hospital hospital = user.getHospital();
+
+        return DoctorSearchResponseDto.builder()
+                .id(profile.getId())
+                .doctorName(user.getFullName())
+                .specialization(profile.getSpecialization())
+                .hospitalName(hospital != null ? hospital.getName() : null)
+                .profileImageUrl(user.getProfileImageUrl())
+                .build();
+    }
 }
+

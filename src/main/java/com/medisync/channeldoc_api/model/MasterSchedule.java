@@ -36,4 +36,8 @@ public class MasterSchedule {
     private LocalTime endTime;
     private Integer timePerPatient;
     private Double consultationFee;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private Boolean isActive = true;
 }

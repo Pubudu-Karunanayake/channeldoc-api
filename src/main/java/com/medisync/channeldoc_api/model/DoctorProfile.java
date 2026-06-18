@@ -1,5 +1,6 @@
 package com.medisync.channeldoc_api.model;
 
+import com.medisync.channeldoc_api.model.enums.Specialization;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,5 +22,6 @@ public class DoctorProfile {
     @Column(nullable = false, unique = true)
     private String slmcNumber;
 
-    private String specialization;
+    @Enumerated(EnumType.STRING)
+    private Specialization specialization;
 }
