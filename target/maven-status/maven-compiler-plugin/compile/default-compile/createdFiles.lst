@@ -33,10 +33,12 @@ com/medisync/channeldoc_api/dto/request/AppointmentBookingRequestDto.class
 com/medisync/channeldoc_api/security/JwtAuthenticationEntryPoint.class
 com/medisync/channeldoc_api/dto/response/HospitalResponseDto$HospitalResponseDtoBuilder.class
 com/medisync/channeldoc_api/dto/response/DoctorResponseDto$DoctorResponseDtoBuilder.class
+com/medisync/channeldoc_api/dto/response/RestPage.class
 com/medisync/channeldoc_api/security/JwtService.class
 com/medisync/channeldoc_api/service/EmailNotificationService.class
 com/medisync/channeldoc_api/model/MasterSchedule.class
 com/medisync/channeldoc_api/dto/request/HospitalRequestDto.class
+com/medisync/channeldoc_api/dto/response/DoctorSearchResponseDto.class
 com/medisync/channeldoc_api/dto/request/HospitalAdminRequestDto.class
 com/medisync/channeldoc_api/dto/request/GoogleAuthRequestDto.class
 com/medisync/channeldoc_api/exception/InvalidTokenException.class
@@ -44,6 +46,7 @@ com/medisync/channeldoc_api/event/AppointmentBookedEvent$AppointmentBookedEventB
 com/medisync/channeldoc_api/model/enums/AppointmentStatus.class
 com/medisync/channeldoc_api/service/impl/AuthServiceImpl.class
 com/medisync/channeldoc_api/repository/AppointmentRepository.class
+com/medisync/channeldoc_api/config/RedisConfig.class
 com/medisync/channeldoc_api/exception/ResourceNotFoundException.class
 com/medisync/channeldoc_api/controller/PatientController.class
 com/medisync/channeldoc_api/service/impl/GoogleTokenVerifierImpl.class
@@ -86,6 +89,7 @@ com/medisync/channeldoc_api/service/impl/HospitalAdminServiceImpl.class
 com/medisync/channeldoc_api/service/impl/UserServiceImpl.class
 com/medisync/channeldoc_api/bootstrap/AdminSeeder.class
 com/medisync/channeldoc_api/ChanneldocApiApplication.class
+com/medisync/channeldoc_api/dto/response/DoctorSearchResponseDto$DoctorSearchResponseDtoBuilder.class
 com/medisync/channeldoc_api/exception/ErrorResponse$ErrorResponseBuilder.class
 com/medisync/channeldoc_api/dto/request/DoctorRequestDto.class
 com/medisync/channeldoc_api/service/AppointmentBookingService.class
