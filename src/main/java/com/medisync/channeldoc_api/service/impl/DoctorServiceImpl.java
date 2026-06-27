@@ -19,11 +19,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -37,7 +39,10 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     @Transactional
-    @CacheEvict(value = "doctors_by_spec", allEntries = true)
+    @Caching(evict = {
+            @CacheEvict(value = "doctors_by_spec", allEntries = true),
+            @CacheEvict(value = "doctors_by_name", allEntries = true)
+    })
     public DoctorResponseDto createDoctor(DoctorRequestDto request) {
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new IllegalArgumentException("User already exists with this email");
@@ -100,6 +105,18 @@ public class DoctorServiceImpl implements DoctorService {
                 .map(this::mapToSearchDto);
 
         return new RestPage<>(mappedPage);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    @Cacheable(value = "doctors_by_name", key = "#name")
+    public List<DoctorSearchResponseDto> searchByName(String name) {
+        log.info("Cache MISS — querying database for doctor name containing [{}]", name);
+
+        return doctorProfileRepository.searchByUserFullName(name)
+                .stream()
+                .map(this::mapToSearchDto)
+                .toList();
     }
 
     private DoctorSearchResponseDto mapToSearchDto(DoctorProfile profile) {

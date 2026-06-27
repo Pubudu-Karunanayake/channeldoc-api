@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/doctors")
 @RequiredArgsConstructor
@@ -35,6 +37,12 @@ public class DoctorController {
             @RequestParam Specialization specialization,
             @PageableDefault(size = 10) Pageable pageable) {
         RestPage<DoctorSearchResponseDto> results = doctorService.searchBySpecialization(specialization, pageable);
+        return ResponseEntity.ok(results);
+    }
+
+    @GetMapping("/search/name")
+    public ResponseEntity<List<DoctorSearchResponseDto>> searchByName(@RequestParam String name) {
+        List<DoctorSearchResponseDto> results = doctorService.searchByName(name);
         return ResponseEntity.ok(results);
     }
 }
