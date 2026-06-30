@@ -24,6 +24,7 @@ public class PatientServiceImpl implements PatientService {
 
     private final UserRepository userRepository;
     private final PatientProfileRepository patientProfileRepository;
+    private final com.medisync.channeldoc_api.repository.AppointmentRepository appointmentRepository;
 
     @Override
     @Transactional
@@ -61,6 +62,13 @@ public class PatientServiceImpl implements PatientService {
         log.info("Created patient profile for user: {}", savedUser.getEmail());
 
         return savedUser;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public com.medisync.channeldoc_api.dto.response.RestPage<com.medisync.channeldoc_api.dto.response.PatientAppointmentHistoryResponseDto> getMyAppointmentHistory(User user, org.springframework.data.domain.Pageable pageable) {
+        org.springframework.data.domain.Page<com.medisync.channeldoc_api.dto.response.PatientAppointmentHistoryResponseDto> page = appointmentRepository.findAppointmentHistoryByPatientId(user.getId(), pageable);
+        return new com.medisync.channeldoc_api.dto.response.RestPage<>(page);
     }
 }
 

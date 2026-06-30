@@ -65,5 +65,24 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
            "GROUP BY d.id, u.fullName, ms.consultationFee, ms.hospitalSharePercentage")
     List<com.medisync.channeldoc_api.dto.response.HospitalMonthlyIncomeResponseDto> findMonthlyIncomeByHospital(
             @Param("hospitalId") Long hospitalId, @Param("year") int year, @Param("month") int month);
+
+    /**
+     * Retrieves the complete, paginated history of appointments for a specific patient.
+     */
+    @Query("SELECT NEW com.medisync.channeldoc_api.dto.response.PatientAppointmentHistoryResponseDto(" +
+           "  a.appointmentNumber, a.appointmentDate, a.status, " +
+           "  du.fullName, d.specialization, h.name, " +
+           "  ms.startTime, ms.endTime, a.paymentAmount" +
+           ") " +
+           "FROM Appointment a " +
+           "JOIN a.doctor d " +
+           "JOIN d.user du " +
+           "JOIN a.hospital h " +
+           "JOIN a.timeSlot ts " +
+           "JOIN ts.dailySession ds " +
+           "JOIN ds.masterSchedule ms " +
+           "WHERE a.patient.id = :patientId")
+    org.springframework.data.domain.Page<com.medisync.channeldoc_api.dto.response.PatientAppointmentHistoryResponseDto> findAppointmentHistoryByPatientId(
+            @Param("patientId") Long patientId, org.springframework.data.domain.Pageable pageable);
 }
 

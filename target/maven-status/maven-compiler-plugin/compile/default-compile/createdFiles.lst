@@ -14,6 +14,7 @@ com/medisync/channeldoc_api/service/PatientService.class
 com/medisync/channeldoc_api/model/PatientProfile$PatientProfileBuilder.class
 com/medisync/channeldoc_api/service/GoogleTokenVerifier.class
 com/medisync/channeldoc_api/service/impl/HospitalManagementServiceImpl.class
+com/medisync/channeldoc_api/dto/response/PatientAppointmentHistoryResponseDto.class
 com/medisync/channeldoc_api/model/Appointment.class
 com/medisync/channeldoc_api/model/enums/SessionStatus.class
 com/medisync/channeldoc_api/dto/request/HospitalRequestDto$HospitalRequestDtoBuilder.class
