@@ -21,4 +21,5 @@ public class MasterScheduleResponseDto {
     private LocalTime endTime;
     private Integer timePerPatient;
     private Double consultationFee;
+    private Double hospitalSharePercentage;
 }
