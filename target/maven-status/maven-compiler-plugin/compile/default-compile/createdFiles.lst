@@ -1,3 +1,4 @@
+com/medisync/channeldoc_api/dto/response/HospitalMonthlyIncomeResponseDto.class
 com/medisync/channeldoc_api/service/SessionGenerationService.class
 com/medisync/channeldoc_api/model/DoctorProfile.class
 com/medisync/channeldoc_api/security/SecurityConfig.class

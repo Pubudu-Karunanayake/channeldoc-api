@@ -22,6 +22,7 @@ public class HospitalAdminServiceImpl implements HospitalAdminService {
 
     private final UserRepository userRepository;
     private final HospitalRepository hospitalRepository;
+    private final com.medisync.channeldoc_api.repository.AppointmentRepository appointmentRepository;
 
     @Override
     @Transactional
@@ -51,5 +52,25 @@ public class HospitalAdminServiceImpl implements HospitalAdminService {
                 .roles(savedUser.getRoles())
                 .hospitalId(savedUser.getHospital() != null ? savedUser.getHospital().getId() : null)
                 .build();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public java.util.List<com.medisync.channeldoc_api.dto.response.HospitalMonthlyIncomeResponseDto> getHospitalMonthlyIncomeAnalysis(User user, int year, int month) {
+        if (user.getHospital() == null) {
+            throw new IllegalArgumentException("User is not associated with any hospital");
+        }
+
+        if (month < 1 || month > 12) {
+            throw new IllegalArgumentException("Invalid month: " + month);
+        }
+
+        java.util.List<com.medisync.channeldoc_api.dto.response.HospitalMonthlyIncomeResponseDto> analysis = appointmentRepository.findMonthlyIncomeByHospital(
+                user.getHospital().getId(), year, month);
+
+        return analysis.stream()
+                .sorted(java.util.Comparator.comparing(
+                        com.medisync.channeldoc_api.dto.response.HospitalMonthlyIncomeResponseDto::getTotalHospitalIncome).reversed())
+                .toList();
     }
 }
