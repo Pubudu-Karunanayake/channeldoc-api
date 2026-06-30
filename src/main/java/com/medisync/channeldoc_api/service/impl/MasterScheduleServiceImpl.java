@@ -42,6 +42,7 @@ public class MasterScheduleServiceImpl implements MasterScheduleService {
                 .endTime(request.getEndTime())
                 .timePerPatient(request.getTimePerPatient())
                 .consultationFee(request.getConsultationFee())
+                .hospitalSharePercentage(request.getHospitalSharePercentage())
                 .build();
 
         MasterSchedule savedSchedule = masterScheduleRepository.save(masterSchedule);
@@ -58,6 +59,7 @@ public class MasterScheduleServiceImpl implements MasterScheduleService {
                 .endTime(savedSchedule.getEndTime())
                 .timePerPatient(savedSchedule.getTimePerPatient())
                 .consultationFee(savedSchedule.getConsultationFee())
+                .hospitalSharePercentage(savedSchedule.getHospitalSharePercentage())
                 .build();
     }
 }

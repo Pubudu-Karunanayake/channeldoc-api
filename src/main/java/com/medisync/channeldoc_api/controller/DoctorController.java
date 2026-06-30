@@ -56,5 +56,15 @@ public class DoctorController {
         List<DoctorTimetableResponseDto> timetable = doctorService.getMyTimetable(user);
         return ResponseEntity.ok(timetable);
     }
+
+    @GetMapping("/my-income-analysis")
+    @PreAuthorize("hasRole('DOCTOR')")
+    public ResponseEntity<List<com.medisync.channeldoc_api.dto.response.DoctorMonthlyIncomeResponseDto>> getMonthlyIncomeAnalysis(
+            @AuthenticationPrincipal User user,
+            @RequestParam int year,
+            @RequestParam int month) {
+        List<com.medisync.channeldoc_api.dto.response.DoctorMonthlyIncomeResponseDto> analysis = doctorService.getMonthlyIncomeAnalysis(user, year, month);
+        return ResponseEntity.ok(analysis);
+    }
 }
 

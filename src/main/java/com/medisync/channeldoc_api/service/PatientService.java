@@ -16,5 +16,10 @@ public interface PatientService {
      * @return the saved User entity
      */
     User registerPatientViaGoogle(GoogleIdToken.Payload payload, PatientRegistrationRequestDto request);
+
+    /**
+     * Retrieves the paginated appointment history for the logged-in patient.
+     */
+    com.medisync.channeldoc_api.dto.response.RestPage<com.medisync.channeldoc_api.dto.response.PatientAppointmentHistoryResponseDto> getMyAppointmentHistory(User user, org.springframework.data.domain.Pageable pageable);
 }
 

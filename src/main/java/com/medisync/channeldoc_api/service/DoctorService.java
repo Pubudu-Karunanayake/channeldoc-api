@@ -19,5 +19,7 @@ public interface DoctorService {
     List<DoctorSearchResponseDto> searchByName(String name);
 
     List<DoctorTimetableResponseDto> getMyTimetable(User user);
+
+    List<com.medisync.channeldoc_api.dto.response.DoctorMonthlyIncomeResponseDto> getMonthlyIncomeAnalysis(User user, int year, int month);
 }
 

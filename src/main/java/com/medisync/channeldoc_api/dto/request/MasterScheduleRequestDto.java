@@ -2,11 +2,14 @@ package com.medisync.channeldoc_api.dto.request;
 
 import com.medisync.channeldoc_api.model.enums.Day;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.AssertTrue;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 import java.time.LocalTime;
 
@@ -33,6 +36,11 @@ public class MasterScheduleRequestDto {
 
     @NotNull(message = "Consultation fee is required")
     private Double consultationFee;
+
+    @NotNull(message = "Hospital share percentage is required")
+    @Min(value = 0, message = "Hospital share percentage cannot be less than 0")
+    @Max(value = 100, message = "Hospital share percentage cannot be greater than 100")
+    private Double hospitalSharePercentage;
 
     @AssertTrue(message = "End time must be after start time")
     public boolean isEndTimeAfterStartTime() {
