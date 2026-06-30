@@ -120,6 +120,7 @@ com/medisync/channeldoc_api/dto/response/AuthResponseDto.class
 com/medisync/channeldoc_api/exception/GlobalExceptionHandler.class
 com/medisync/channeldoc_api/model/DailySession.class
 com/medisync/channeldoc_api/config/RabbitMQConfig.class
+com/medisync/channeldoc_api/dto/response/DoctorMonthlyIncomeResponseDto.class
 com/medisync/channeldoc_api/dto/response/PatientProfileResponseDto.class
 com/medisync/channeldoc_api/dto/response/PatientProfileResponseDto$PatientProfileResponseDtoBuilder.class
 com/medisync/channeldoc_api/repository/DoctorProfileRepository.class

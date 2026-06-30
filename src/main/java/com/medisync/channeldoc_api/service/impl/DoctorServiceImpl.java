@@ -205,6 +205,29 @@ public class DoctorServiceImpl implements DoctorService {
                 .thenComparing(DoctorTimetableResponseDto::getStartTime);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<com.medisync.channeldoc_api.dto.response.DoctorMonthlyIncomeResponseDto> getMonthlyIncomeAnalysis(User user, int year, int month) {
+        if (month < 1 || month > 12) {
+            throw new IllegalArgumentException("Invalid month: " + month);
+        }
+
+        // 1. Resolve the DoctorProfile from the authenticated User
+        DoctorProfile doctorProfile = doctorProfileRepository.findById(user.getId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Doctor profile not found for user: " + user.getId()));
+
+        // 2. Query the repository for the monthly income analysis
+        List<com.medisync.channeldoc_api.dto.response.DoctorMonthlyIncomeResponseDto> analysis = appointmentRepository.findMonthlyIncomeByDoctor(
+                doctorProfile.getId(), year, month);
+
+        // 3. Sort results by doctorNetIncome descending
+        return analysis.stream()
+                .sorted(Comparator.comparing(
+                        com.medisync.channeldoc_api.dto.response.DoctorMonthlyIncomeResponseDto::getDoctorNetIncome).reversed())
+                .toList();
+    }
+
     private DoctorSearchResponseDto mapToSearchDto(DoctorProfile profile) {
         User user = profile.getUser();
         Hospital hospital = user.getHospital();

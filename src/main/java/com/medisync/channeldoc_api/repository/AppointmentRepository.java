@@ -26,5 +26,24 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
      */
     long countByDoctorIdAndHospitalIdAndAppointmentDateAndStatusNot(
             Long doctorId, Long hospitalId, LocalDate appointmentDate, AppointmentStatus status);
+
+    /**
+     * Calculates the monthly income for a specific doctor, grouped by hospital.
+     */
+    @Query("SELECT NEW com.medisync.channeldoc_api.dto.response.DoctorMonthlyIncomeResponseDto(" +
+           "  h.name, h.id, COUNT(a), ms.consultationFee, ms.hospitalSharePercentage" +
+           ") " +
+           "FROM Appointment a " +
+           "JOIN a.timeSlot ts " +
+           "JOIN ts.dailySession ds " +
+           "JOIN ds.masterSchedule ms " +
+           "JOIN ms.hospital h " +
+           "WHERE a.doctor.id = :doctorId " +
+           "  AND a.status <> com.medisync.channeldoc_api.model.enums.AppointmentStatus.CANCELLED " +
+           "  AND YEAR(a.appointmentDate) = :year " +
+           "  AND MONTH(a.appointmentDate) = :month " +
+           "GROUP BY h.id, h.name, ms.consultationFee, ms.hospitalSharePercentage")
+    List<com.medisync.channeldoc_api.dto.response.DoctorMonthlyIncomeResponseDto> findMonthlyIncomeByDoctor(
+            @Param("doctorId") Long doctorId, @Param("year") int year, @Param("month") int month);
 }
 
