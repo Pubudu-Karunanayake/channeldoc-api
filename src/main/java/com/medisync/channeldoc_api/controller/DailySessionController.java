@@ -26,8 +26,18 @@ public class DailySessionController {
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
             @RequestParam(required = false) Long masterScheduleId,
             @AuthenticationPrincipal User user) {
-        
+
         List<DailySessionResponseDto> sessions = dailySessionService.getDailySessions(date, masterScheduleId, user);
         return ResponseEntity.ok(sessions);
+    }
+
+    @PatchMapping("/{sessionId}/cancel")
+    @PreAuthorize("hasRole('HOSPITAL_ADMIN')")
+    public ResponseEntity<DailySessionResponseDto> cancelDailySession(
+            @PathVariable Long sessionId,
+            @AuthenticationPrincipal User user) {
+
+        DailySessionResponseDto response = dailySessionService.cancelDailySession(sessionId, user);
+        return ResponseEntity.ok(response);
     }
 }

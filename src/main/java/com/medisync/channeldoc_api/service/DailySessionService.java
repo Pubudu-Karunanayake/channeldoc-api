@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface DailySessionService {
     List<DailySessionResponseDto> getDailySessions(LocalDate date, Long masterScheduleId, User user);
+
+    DailySessionResponseDto cancelDailySession(Long sessionId, User user);
 }

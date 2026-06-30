@@ -1,5 +1,6 @@
 package com.medisync.channeldoc_api.service.impl;
 
+import com.medisync.channeldoc_api.dto.message.SessionCancellationMessage;
 import com.medisync.channeldoc_api.event.AppointmentBookedEvent;
 import com.medisync.channeldoc_api.service.EmailNotificationService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class EmailNotificationServiceImpl implements EmailNotificationService {
 
             helper.setTo(event.getPatientEmail());
             helper.setSubject("Booking Confirmation - " + event.getAppointmentNumber());
-            helper.setText(buildEmailContent(event), true);
+            helper.setText(buildBookingEmailContent(event), true);
 
             mailSender.send(message);
             log.info("Confirmation email sent successfully for appointment [{}] to [{}]",
@@ -38,7 +39,27 @@ public class EmailNotificationServiceImpl implements EmailNotificationService {
         }
     }
 
-    private String buildEmailContent(AppointmentBookedEvent event) {
+    @Override
+    public void sendSessionCancellationEmail(SessionCancellationMessage cancellation) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setTo(cancellation.getPatientEmail());
+            helper.setSubject("Session Cancelled - Appointment " + cancellation.getAppointmentNumber());
+            helper.setText(buildCancellationEmailContent(cancellation), true);
+
+            mailSender.send(message);
+            log.info("Cancellation email sent successfully for appointment [{}] to [{}]",
+                    cancellation.getAppointmentNumber(), cancellation.getPatientEmail());
+
+        } catch (MessagingException e) {
+            log.error("Failed to send cancellation email for appointment [{}] to [{}]: {}",
+                    cancellation.getAppointmentNumber(), cancellation.getPatientEmail(), e.getMessage(), e);
+        }
+    }
+
+    private String buildBookingEmailContent(AppointmentBookedEvent event) {
         return """
                 <html>
                 <body style="font-family: Arial, sans-serif; padding: 20px;">
@@ -82,7 +103,45 @@ public class EmailNotificationServiceImpl implements EmailNotificationService {
                 event.getHospitalName(),
                 event.getAppointmentDate(),
                 event.getSlotTime(),
-                event.getConsultationFee()
-        );
+                event.getConsultationFee());
+    }
+
+    private String buildCancellationEmailContent(SessionCancellationMessage cancellation) {
+        return """
+                <html>
+                <body style="font-family: Arial, sans-serif; padding: 20px;">
+                    <h2 style="color: #c0392b;">Session Cancellation Notice</h2>
+                    <hr/>
+                    <p>Dear <strong>%s</strong>,</p>
+                    <p>We regret to inform you that your scheduled session has been <strong>cancelled</strong> by the hospital administration. Please find the details below:</p>
+                    <table style="border-collapse: collapse; width: 100%%; max-width: 500px;">
+                        <tr>
+                            <td style="padding: 8px; font-weight: bold;">Appointment No:</td>
+                            <td style="padding: 8px;">%s</td>
+                        </tr>
+                        <tr style="background-color: #f2f2f2;">
+                            <td style="padding: 8px; font-weight: bold;">Doctor:</td>
+                            <td style="padding: 8px;">%s</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; font-weight: bold;">Hospital:</td>
+                            <td style="padding: 8px;">%s</td>
+                        </tr>
+                        <tr style="background-color: #f2f2f2;">
+                            <td style="padding: 8px; font-weight: bold;">Session Date:</td>
+                            <td style="padding: 8px;">%s</td>
+                        </tr>
+                    </table>
+                    <p style="margin-top: 20px; color: #7f8c8d;">If you have any questions, please contact the hospital directly. We apologize for the inconvenience.</p>
+                    <p>Thank you for choosing MediSync ChannelDoc.</p>
+                </body>
+                </html>
+                """.formatted(
+                cancellation.getPatientName(),
+                cancellation.getAppointmentNumber(),
+                cancellation.getDoctorName(),
+                cancellation.getHospitalName(),
+                cancellation.getSessionDate());
     }
 }
+
