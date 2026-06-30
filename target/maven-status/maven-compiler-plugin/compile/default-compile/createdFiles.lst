@@ -3,7 +3,9 @@ com/medisync/channeldoc_api/model/DoctorProfile.class
 com/medisync/channeldoc_api/security/SecurityConfig.class
 com/medisync/channeldoc_api/controller/HospitalManagementController.class
 com/medisync/channeldoc_api/dto/response/HospitalResponseDto.class
+com/medisync/channeldoc_api/controller/DailySessionController.class
 com/medisync/channeldoc_api/dto/request/PatientRegistrationRequestDto.class
+com/medisync/channeldoc_api/service/DailySessionService.class
 com/medisync/channeldoc_api/model/MasterSchedule$MasterScheduleBuilder.class
 com/medisync/channeldoc_api/model/Appointment$AppointmentBuilder.class
 com/medisync/channeldoc_api/controller/AppointmentController.class
@@ -55,11 +57,13 @@ com/medisync/channeldoc_api/model/User.class
 com/medisync/channeldoc_api/service/HospitalManagementService.class
 com/medisync/channeldoc_api/repository/MasterScheduleRepository.class
 com/medisync/channeldoc_api/dto/response/HospitalAdminResponseDto.class
+com/medisync/channeldoc_api/dto/response/DailySessionResponseDto.class
 com/medisync/channeldoc_api/dto/response/HospitalAdminResponseDto$HospitalAdminResponseDtoBuilder.class
 com/medisync/channeldoc_api/repository/DailySessionRepository.class
 com/medisync/channeldoc_api/controller/DoctorController.class
 com/medisync/channeldoc_api/model/enums/PaymentStatus.class
 com/medisync/channeldoc_api/security/JwtAuthenticationFilter.class
+com/medisync/channeldoc_api/service/impl/DailySessionServiceImpl.class
 com/medisync/channeldoc_api/dto/response/UserResponseDto.class
 com/medisync/channeldoc_api/event/listener/BookingConfirmationListener.class
 com/medisync/channeldoc_api/scheduler/SessionGenerationScheduler.class
@@ -116,3 +120,4 @@ com/medisync/channeldoc_api/dto/response/PatientProfileResponseDto$PatientProfil
 com/medisync/channeldoc_api/repository/DoctorProfileRepository.class
 com/medisync/channeldoc_api/model/enums/Specialization.class
 com/medisync/channeldoc_api/dto/response/HospitalManagementResponseDto$HospitalManagementResponseDtoBuilder.class
+com/medisync/channeldoc_api/dto/response/DailySessionResponseDto$DailySessionResponseDtoBuilder.class
