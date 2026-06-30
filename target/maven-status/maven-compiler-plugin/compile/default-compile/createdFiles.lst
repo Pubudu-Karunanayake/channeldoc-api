@@ -64,6 +64,7 @@ com/medisync/channeldoc_api/dto/response/DailySessionResponseDto.class
 com/medisync/channeldoc_api/dto/response/HospitalAdminResponseDto$HospitalAdminResponseDtoBuilder.class
 com/medisync/channeldoc_api/repository/DailySessionRepository.class
 com/medisync/channeldoc_api/controller/DoctorController.class
+com/medisync/channeldoc_api/dto/response/DoctorTimetableResponseDto.class
 com/medisync/channeldoc_api/model/enums/PaymentStatus.class
 com/medisync/channeldoc_api/security/JwtAuthenticationFilter.class
 com/medisync/channeldoc_api/service/impl/DailySessionServiceImpl.class
@@ -122,6 +123,7 @@ com/medisync/channeldoc_api/config/RabbitMQConfig.class
 com/medisync/channeldoc_api/dto/response/PatientProfileResponseDto.class
 com/medisync/channeldoc_api/dto/response/PatientProfileResponseDto$PatientProfileResponseDtoBuilder.class
 com/medisync/channeldoc_api/repository/DoctorProfileRepository.class
+com/medisync/channeldoc_api/dto/response/DoctorTimetableResponseDto$DoctorTimetableResponseDtoBuilder.class
 com/medisync/channeldoc_api/dto/message/SessionCancellationMessage$SessionCancellationMessageBuilder.class
 com/medisync/channeldoc_api/model/enums/Specialization.class
 com/medisync/channeldoc_api/dto/response/HospitalManagementResponseDto$HospitalManagementResponseDtoBuilder.class

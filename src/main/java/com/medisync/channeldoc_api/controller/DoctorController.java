@@ -3,7 +3,9 @@ package com.medisync.channeldoc_api.controller;
 import com.medisync.channeldoc_api.dto.request.DoctorRequestDto;
 import com.medisync.channeldoc_api.dto.response.DoctorResponseDto;
 import com.medisync.channeldoc_api.dto.response.DoctorSearchResponseDto;
+import com.medisync.channeldoc_api.dto.response.DoctorTimetableResponseDto;
 import com.medisync.channeldoc_api.dto.response.RestPage;
+import com.medisync.channeldoc_api.model.User;
 import com.medisync.channeldoc_api.model.enums.Specialization;
 import com.medisync.channeldoc_api.service.DoctorService;
 import jakarta.validation.Valid;
@@ -13,6 +15,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,4 +48,13 @@ public class DoctorController {
         List<DoctorSearchResponseDto> results = doctorService.searchByName(name);
         return ResponseEntity.ok(results);
     }
+
+    @GetMapping("/my-timetable")
+    @PreAuthorize("hasRole('DOCTOR')")
+    public ResponseEntity<List<DoctorTimetableResponseDto>> getMyTimetable(
+            @AuthenticationPrincipal User user) {
+        List<DoctorTimetableResponseDto> timetable = doctorService.getMyTimetable(user);
+        return ResponseEntity.ok(timetable);
+    }
 }
+

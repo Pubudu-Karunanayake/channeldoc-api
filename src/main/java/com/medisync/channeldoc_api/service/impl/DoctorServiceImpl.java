@@ -3,16 +3,22 @@ package com.medisync.channeldoc_api.service.impl;
 import com.medisync.channeldoc_api.dto.request.DoctorRequestDto;
 import com.medisync.channeldoc_api.dto.response.DoctorResponseDto;
 import com.medisync.channeldoc_api.dto.response.DoctorSearchResponseDto;
+import com.medisync.channeldoc_api.dto.response.DoctorTimetableResponseDto;
 import com.medisync.channeldoc_api.dto.response.RestPage;
 import com.medisync.channeldoc_api.exception.ResourceNotFoundException;
 import com.medisync.channeldoc_api.model.DoctorProfile;
 import com.medisync.channeldoc_api.model.Hospital;
+import com.medisync.channeldoc_api.model.MasterSchedule;
 import com.medisync.channeldoc_api.model.User;
+import com.medisync.channeldoc_api.model.enums.AppointmentStatus;
 import com.medisync.channeldoc_api.model.enums.AuthProvider;
+import com.medisync.channeldoc_api.model.enums.Day;
 import com.medisync.channeldoc_api.model.enums.Specialization;
 import com.medisync.channeldoc_api.model.enums.UserRole;
+import com.medisync.channeldoc_api.repository.AppointmentRepository;
 import com.medisync.channeldoc_api.repository.DoctorProfileRepository;
 import com.medisync.channeldoc_api.repository.HospitalRepository;
+import com.medisync.channeldoc_api.repository.MasterScheduleRepository;
 import com.medisync.channeldoc_api.repository.UserRepository;
 import com.medisync.channeldoc_api.service.DoctorService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +31,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -36,6 +44,8 @@ public class DoctorServiceImpl implements DoctorService {
     private final UserRepository userRepository;
     private final HospitalRepository hospitalRepository;
     private final DoctorProfileRepository doctorProfileRepository;
+    private final MasterScheduleRepository masterScheduleRepository;
+    private final AppointmentRepository appointmentRepository;
 
     @Override
     @Transactional
@@ -119,6 +129,82 @@ public class DoctorServiceImpl implements DoctorService {
                 .toList();
     }
 
+    /**
+     * Retrieves the logged-in doctor's full weekly timetable from MasterSchedule.
+     *
+     * <p>For entries matching today's day of the week, the response includes
+     * the live count of active (non-cancelled) appointments at each hospital.</p>
+     *
+     * <p>Results are sorted: today's entries first, then by day-of-week ordinal,
+     * then by start time within each day.</p>
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<DoctorTimetableResponseDto> getMyTimetable(User user) {
+        // 1. Resolve the DoctorProfile from the authenticated User
+        DoctorProfile doctorProfile = doctorProfileRepository.findById(user.getId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Doctor profile not found for user: " + user.getId()));
+
+        // 2. Determine today's Day enum
+        LocalDate today = LocalDate.now();
+        Day todayDay = Day.valueOf(today.getDayOfWeek().name());
+
+        // 3. Fetch all active schedules for this doctor
+        List<MasterSchedule> schedules = masterScheduleRepository
+                .findByDoctorIdAndIsActiveTrue(doctorProfile.getId());
+
+        log.info("Fetched {} active master schedules for doctor [{}]",
+                schedules.size(), user.getFullName());
+
+        // 4. Map each schedule to a DTO, enriching today's entries with appointment count
+        return schedules.stream()
+                .map(schedule -> mapToTimetableDto(schedule, todayDay, today, doctorProfile.getId()))
+                .sorted(timetableSorter(todayDay))
+                .toList();
+    }
+
+    private DoctorTimetableResponseDto mapToTimetableDto(
+            MasterSchedule schedule, Day todayDay, LocalDate today, Long doctorId) {
+
+        boolean isToday = schedule.getDay() == todayDay;
+        Integer appointmentCount = null;
+
+        if (isToday) {
+            long count = appointmentRepository.countByDoctorIdAndHospitalIdAndAppointmentDateAndStatusNot(
+                    doctorId,
+                    schedule.getHospital().getId(),
+                    today,
+                    AppointmentStatus.CANCELLED
+            );
+            appointmentCount = (int) count;
+        }
+
+        return DoctorTimetableResponseDto.builder()
+                .day(schedule.getDay())
+                .hospitalName(schedule.getHospital().getName())
+                .hospitalId(schedule.getHospital().getId())
+                .startTime(schedule.getStartTime())
+                .endTime(schedule.getEndTime())
+                .consultationFee(schedule.getConsultationFee())
+                .isToday(isToday)
+                .todayAppointmentCount(appointmentCount)
+                .build();
+    }
+
+    /**
+     * Comparator that sorts timetable entries:
+     * 1. Today's entries first
+     * 2. Then by day-of-week ordinal (Monday=0 .. Sunday=6)
+     * 3. Then by start time within each day
+     */
+    private Comparator<DoctorTimetableResponseDto> timetableSorter(Day todayDay) {
+        return Comparator
+                .comparing((DoctorTimetableResponseDto dto) -> dto.getDay() != todayDay)
+                .thenComparing(dto -> dto.getDay().ordinal())
+                .thenComparing(DoctorTimetableResponseDto::getStartTime);
+    }
+
     private DoctorSearchResponseDto mapToSearchDto(DoctorProfile profile) {
         User user = profile.getUser();
         Hospital hospital = user.getHospital();
@@ -132,4 +218,3 @@ public class DoctorServiceImpl implements DoctorService {
                 .build();
     }
 }
-
