@@ -33,6 +33,7 @@ com/medisync/channeldoc_api/controller/MasterScheduleController.class
 com/medisync/channeldoc_api/repository/UserRepository.class
 com/medisync/channeldoc_api/service/impl/SessionGenerationServiceImpl.class
 com/medisync/channeldoc_api/dto/request/HospitalUpdateRequestDto$HospitalUpdateRequestDtoBuilder.class
+com/medisync/channeldoc_api/security/TokenBlacklistService.class
 com/medisync/channeldoc_api/model/Hospital$HospitalBuilder.class
 com/medisync/channeldoc_api/dto/response/UserProfileResponseDto$UserProfileResponseDtoBuilderImpl.class
 com/medisync/channeldoc_api/model/Hospital.class

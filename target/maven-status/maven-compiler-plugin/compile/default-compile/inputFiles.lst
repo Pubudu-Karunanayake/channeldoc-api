@@ -86,6 +86,7 @@
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/security/JwtAuthenticationFilter.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/security/JwtService.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/security/SecurityConfig.java
+/home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/security/TokenBlacklistService.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/service/AppointmentBookingService.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/service/AuthService.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/service/DailySessionService.java

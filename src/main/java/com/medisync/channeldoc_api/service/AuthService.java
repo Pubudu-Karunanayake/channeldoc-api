@@ -24,5 +24,12 @@ public interface AuthService {
      * @return AuthResponse with application JWT and user info
      */
     AuthResponseDto registerPatientWithGoogle(PatientRegistrationRequestDto request);
+
+    /**
+     * Logs out the user by blacklisting the provided JWT token.
+     *
+     * @param token the application JWT to blacklist
+     */
+    void logout(String token);
 }
 

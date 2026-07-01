@@ -10,8 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.StringUtils;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -43,6 +46,21 @@ public class AuthController {
             @Valid @RequestBody PatientRegistrationRequestDto request) {
         AuthResponseDto response = authService.registerPatientWithGoogle(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    /**
+     * Logs out the user by invalidating their JWT token.
+     */
+    @PostMapping("/logout")
+    public ResponseEntity<Map<String, String>> logout(
+            @RequestHeader(value = "Authorization", required = false) String bearerToken) {
+        
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            String token = bearerToken.substring(7);
+            authService.logout(token);
+        }
+        
+        return ResponseEntity.ok(Map.of("message", "Logged out successfully"));
     }
 }
 
