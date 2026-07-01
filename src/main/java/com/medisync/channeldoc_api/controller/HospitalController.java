@@ -18,7 +18,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import com.medisync.channeldoc_api.model.User;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
-
+import org.springframework.web.bind.annotation.PathVariable;
+import com.medisync.channeldoc_api.dto.response.HospitalStaffResponseDto;
 @RestController
 @RequestMapping("/api/hospitals")
 @RequiredArgsConstructor
@@ -60,5 +61,12 @@ public class HospitalController {
         }
         HospitalResponseDto updatedHospital = hospitalService.updateHospital(user.getHospital().getId(), request);
         return ResponseEntity.ok(updatedHospital);
+    }
+
+    @GetMapping("/{hospitalId}/staff")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
+    public ResponseEntity<HospitalStaffResponseDto> getHospitalStaff(@PathVariable Long hospitalId) {
+        HospitalStaffResponseDto staff = hospitalService.getHospitalStaff(hospitalId);
+        return ResponseEntity.ok(staff);
     }
 }

@@ -15,6 +15,8 @@ import com.medisync.channeldoc_api.exception.ResourceNotFoundException;
 public class HospitalServiceImpl implements HospitalService {
 
     private final HospitalRepository hospitalRepository;
+    private final com.medisync.channeldoc_api.repository.UserRepository userRepository;
+    private final com.medisync.channeldoc_api.service.strategy.UserProfileStrategyFactory userProfileStrategyFactory;
 
     @Override
     public HospitalResponseDto createHospital(HospitalRequestDto requestDto) {
@@ -86,5 +88,32 @@ public class HospitalServiceImpl implements HospitalService {
             throw new ResourceNotFoundException("Hospital not found with id: " + id);
         }
         hospitalRepository.deleteById(id);
+    }
+
+    @Override
+    @org.springframework.transaction.annotation.Transactional(readOnly = true)
+    public com.medisync.channeldoc_api.dto.response.HospitalStaffResponseDto getHospitalStaff(Long hospitalId) {
+        if (!hospitalRepository.existsById(hospitalId)) {
+            throw new ResourceNotFoundException("Hospital not found with id: " + hospitalId);
+        }
+
+        java.util.List<com.medisync.channeldoc_api.model.User> staff = userRepository.findStaffByHospitalIdAndRoles(
+                hospitalId,
+                java.util.Arrays.asList(
+                        com.medisync.channeldoc_api.model.enums.UserRole.ROLE_HOSPITAL_ADMIN,
+                        com.medisync.channeldoc_api.model.enums.UserRole.ROLE_HOSPITAL_MANAGEMENT
+                )
+        );
+
+        java.util.Map<Boolean, java.util.List<com.medisync.channeldoc_api.dto.response.UserProfileResponseDto>> partitionedStaff = staff.stream()
+                .map(user -> userProfileStrategyFactory.getStrategy(user.getRoles()).getProfile(user))
+                .collect(java.util.stream.Collectors.partitioningBy(
+                        dto -> dto.getRoles().contains(com.medisync.channeldoc_api.model.enums.UserRole.ROLE_HOSPITAL_ADMIN)
+                ));
+
+        return com.medisync.channeldoc_api.dto.response.HospitalStaffResponseDto.builder()
+                .admins(partitionedStaff.get(true))
+                .management(partitionedStaff.get(false))
+                .build();
     }
 }
