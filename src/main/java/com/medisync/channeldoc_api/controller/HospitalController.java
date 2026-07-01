@@ -26,4 +26,11 @@ public class HospitalController {
         HospitalResponseDto responseDto = hospitalService.createHospital(requestDto);
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
+
+    @org.springframework.web.bind.annotation.GetMapping
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
+    public ResponseEntity<java.util.List<HospitalResponseDto>> getAllHospitals() {
+        java.util.List<HospitalResponseDto> hospitals = hospitalService.getAllHospitals();
+        return ResponseEntity.ok(hospitals);
+    }
 }

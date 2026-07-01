@@ -31,4 +31,16 @@ public class HospitalServiceImpl implements HospitalService {
                 .contactNumber(savedHospital.getContactNumber())
                 .build();
     }
+
+    @Override
+    public java.util.List<HospitalResponseDto> getAllHospitals() {
+        return hospitalRepository.findAll().stream()
+                .map(hospital -> HospitalResponseDto.builder()
+                        .id(hospital.getId())
+                        .name(hospital.getName())
+                        .address(hospital.getAddress())
+                        .contactNumber(hospital.getContactNumber())
+                        .build())
+                .toList();
+    }
 }
