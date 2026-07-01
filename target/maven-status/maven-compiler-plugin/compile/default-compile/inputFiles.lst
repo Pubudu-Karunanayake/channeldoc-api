@@ -3,7 +3,6 @@
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/config/AsyncConfig.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/config/RabbitMQConfig.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/config/RedisConfig.java
-/home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/controller/AdminHospitalController.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/controller/AppointmentController.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/controller/AuthController.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/controller/DailySessionController.java
@@ -13,6 +12,7 @@
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/controller/HospitalManagementController.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/controller/MasterScheduleController.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/controller/PatientController.java
+/home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/controller/SuperAdminController.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/controller/UserController.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/dto/message/SessionCancellationMessage.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/dto/request/AppointmentBookingRequestDto.java

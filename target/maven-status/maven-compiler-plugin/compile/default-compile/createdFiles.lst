@@ -141,7 +141,6 @@ com/medisync/channeldoc_api/model/DailySession$DailySessionBuilder.class
 com/medisync/channeldoc_api/dto/request/MasterScheduleRequestDto$MasterScheduleRequestDtoBuilder.class
 com/medisync/channeldoc_api/dto/response/AuthResponseDto.class
 com/medisync/channeldoc_api/dto/response/HospitalStaffResponseDto.class
-com/medisync/channeldoc_api/controller/AdminHospitalController.class
 com/medisync/channeldoc_api/exception/GlobalExceptionHandler.class
 com/medisync/channeldoc_api/model/DailySession.class
 com/medisync/channeldoc_api/config/RabbitMQConfig.class

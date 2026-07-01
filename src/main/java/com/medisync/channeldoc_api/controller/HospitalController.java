@@ -27,20 +27,6 @@ public class HospitalController {
 
     private final HospitalService hospitalService;
 
-    @PostMapping
-    @PreAuthorize("hasRole('SUPER_ADMIN')")
-    public ResponseEntity<HospitalResponseDto> createHospital(@Valid @RequestBody HospitalRequestDto requestDto) {
-        HospitalResponseDto responseDto = hospitalService.createHospital(requestDto);
-        return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
-    }
-
-    @GetMapping
-    @PreAuthorize("hasRole('SUPER_ADMIN')")
-    public ResponseEntity<java.util.List<HospitalResponseDto>> getAllHospitals() {
-        java.util.List<HospitalResponseDto> hospitals = hospitalService.getAllHospitals();
-        return ResponseEntity.ok(hospitals);
-    }
-
     @GetMapping("/my-hospital")
     @PreAuthorize("hasRole('HOSPITAL_ADMIN')")
     public ResponseEntity<HospitalResponseDto> getMyHospitalDetails(@AuthenticationPrincipal User user) {
@@ -63,10 +49,4 @@ public class HospitalController {
         return ResponseEntity.ok(updatedHospital);
     }
 
-    @GetMapping("/{hospitalId}/staff")
-    @PreAuthorize("hasRole('SUPER_ADMIN')")
-    public ResponseEntity<HospitalStaffResponseDto> getHospitalStaff(@PathVariable Long hospitalId) {
-        HospitalStaffResponseDto staff = hospitalService.getHospitalStaff(hospitalId);
-        return ResponseEntity.ok(staff);
-    }
 }
