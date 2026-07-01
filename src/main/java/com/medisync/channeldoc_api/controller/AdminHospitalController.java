@@ -1,7 +1,9 @@
 package com.medisync.channeldoc_api.controller;
 
+import com.medisync.channeldoc_api.dto.request.HospitalStaffUpdateRequestDto;
 import com.medisync.channeldoc_api.dto.request.HospitalUpdateRequestDto;
 import com.medisync.channeldoc_api.dto.response.HospitalResponseDto;
+import com.medisync.channeldoc_api.dto.response.UserProfileResponseDto;
 import com.medisync.channeldoc_api.service.HospitalService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -43,5 +45,14 @@ public class AdminHospitalController {
     public ResponseEntity<Void> deleteHospital(@PathVariable Long id) {
         hospitalService.deleteHospital(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/staff/{staffId}")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
+    public ResponseEntity<UserProfileResponseDto> updateHospitalStaff(
+            @PathVariable Long staffId,
+            @Valid @RequestBody HospitalStaffUpdateRequestDto request) {
+        UserProfileResponseDto updatedStaff = hospitalService.updateHospitalStaff(staffId, request);
+        return ResponseEntity.ok(updatedStaff);
     }
 }

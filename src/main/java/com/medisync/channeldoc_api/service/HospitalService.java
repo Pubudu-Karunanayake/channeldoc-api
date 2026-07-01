@@ -5,6 +5,8 @@ import com.medisync.channeldoc_api.dto.response.HospitalResponseDto;
 
 import java.util.List;
 
+import com.medisync.channeldoc_api.dto.response.HospitalStaffResponseDto;
+
 public interface HospitalService {
     HospitalResponseDto createHospital(HospitalRequestDto requestDto);
     
@@ -15,4 +17,8 @@ public interface HospitalService {
     HospitalResponseDto updateHospital(Long id, com.medisync.channeldoc_api.dto.request.HospitalUpdateRequestDto request);
 
     void deleteHospital(Long id);
+
+    HospitalStaffResponseDto getHospitalStaff(Long hospitalId);
+
+    com.medisync.channeldoc_api.dto.response.UserProfileResponseDto updateHospitalStaff(Long staffId, com.medisync.channeldoc_api.dto.request.HospitalStaffUpdateRequestDto request);
 }

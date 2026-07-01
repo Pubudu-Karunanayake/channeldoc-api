@@ -123,7 +123,9 @@ com/medisync/channeldoc_api/service/HospitalAdminService.class
 com/medisync/channeldoc_api/service/strategy/UserProfileStrategyFactory.class
 com/medisync/channeldoc_api/dto/request/MasterScheduleRequestDto.class
 com/medisync/channeldoc_api/service/impl/MasterScheduleServiceImpl.class
+com/medisync/channeldoc_api/dto/request/HospitalStaffUpdateRequestDto$HospitalStaffUpdateRequestDtoBuilder.class
 com/medisync/channeldoc_api/dto/request/AppointmentBookingRequestDto$AppointmentBookingRequestDtoBuilder.class
+com/medisync/channeldoc_api/dto/request/HospitalStaffUpdateRequestDto.class
 com/medisync/channeldoc_api/dto/response/MasterScheduleResponseDto.class
 com/medisync/channeldoc_api/service/HospitalService.class
 com/medisync/channeldoc_api/model/TimeSlot.class
@@ -133,6 +135,7 @@ com/medisync/channeldoc_api/repository/PatientProfileRepository.class
 com/medisync/channeldoc_api/model/DailySession$DailySessionBuilder.class
 com/medisync/channeldoc_api/dto/request/MasterScheduleRequestDto$MasterScheduleRequestDtoBuilder.class
 com/medisync/channeldoc_api/dto/response/AuthResponseDto.class
+com/medisync/channeldoc_api/dto/response/HospitalStaffResponseDto.class
 com/medisync/channeldoc_api/controller/AdminHospitalController.class
 com/medisync/channeldoc_api/exception/GlobalExceptionHandler.class
 com/medisync/channeldoc_api/model/DailySession.class
@@ -145,4 +148,5 @@ com/medisync/channeldoc_api/dto/response/DoctorTimetableResponseDto$DoctorTimeta
 com/medisync/channeldoc_api/dto/message/SessionCancellationMessage$SessionCancellationMessageBuilder.class
 com/medisync/channeldoc_api/model/enums/Specialization.class
 com/medisync/channeldoc_api/dto/response/HospitalManagementResponseDto$HospitalManagementResponseDtoBuilder.class
+com/medisync/channeldoc_api/dto/response/HospitalStaffResponseDto$HospitalStaffResponseDtoBuilder.class
 com/medisync/channeldoc_api/dto/response/DailySessionResponseDto$DailySessionResponseDtoBuilder.class
