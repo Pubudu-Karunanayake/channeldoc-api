@@ -66,5 +66,12 @@ public class DoctorController {
         List<com.medisync.channeldoc_api.dto.response.DoctorMonthlyIncomeResponseDto> analysis = doctorService.getMonthlyIncomeAnalysis(user, year, month);
         return ResponseEntity.ok(analysis);
     }
+
+    @GetMapping("/{doctorId}/availability")
+    @PreAuthorize("hasRole('PATIENT')")
+    public ResponseEntity<List<com.medisync.channeldoc_api.dto.response.DoctorAvailabilityResponseDto>> getDoctorAvailability(@PathVariable Long doctorId) {
+        List<com.medisync.channeldoc_api.dto.response.DoctorAvailabilityResponseDto> availability = doctorService.getDoctorAvailability(doctorId);
+        return ResponseEntity.ok(availability);
+    }
 }
 

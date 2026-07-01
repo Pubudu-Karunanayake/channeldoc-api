@@ -74,6 +74,7 @@ com/medisync/channeldoc_api/repository/MasterScheduleRepository.class
 com/medisync/channeldoc_api/dto/response/HospitalAdminResponseDto.class
 com/medisync/channeldoc_api/dto/response/DailySessionResponseDto.class
 com/medisync/channeldoc_api/dto/response/HospitalAdminResponseDto$HospitalAdminResponseDtoBuilder.class
+com/medisync/channeldoc_api/dto/response/DoctorAvailabilityResponseDto$DoctorAvailabilityResponseDtoBuilder.class
 com/medisync/channeldoc_api/repository/DailySessionRepository.class
 com/medisync/channeldoc_api/service/strategy/UserProfileStrategy.class
 com/medisync/channeldoc_api/controller/DoctorController.class
@@ -119,6 +120,7 @@ com/medisync/channeldoc_api/dto/request/DoctorRequestDto.class
 com/medisync/channeldoc_api/service/AppointmentBookingService.class
 com/medisync/channeldoc_api/controller/UserController.class
 com/medisync/channeldoc_api/exception/UserAlreadyExistsException.class
+com/medisync/channeldoc_api/dto/response/DoctorAvailabilityResponseDto.class
 com/medisync/channeldoc_api/model/enums/Gender.class
 com/medisync/channeldoc_api/service/HospitalAdminService.class
 com/medisync/channeldoc_api/service/strategy/UserProfileStrategyFactory.class
