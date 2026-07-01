@@ -99,4 +99,38 @@ public class AppointmentBookingServiceImpl implements AppointmentBookingService 
                 .createdAt(savedAppointment.getCreatedAt())
                 .build();
     }
+
+    @Override
+    @Transactional
+    public AppointmentResponseDto updatePaymentStatus(Long appointmentId, com.medisync.channeldoc_api.dto.request.PaymentStatusUpdateRequestDto request, User user) {
+        Appointment appointment = appointmentRepository.findById(appointmentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Appointment not found with id: " + appointmentId));
+
+        if (!user.getHospital().getId().equals(appointment.getHospital().getId())) {
+            throw new org.springframework.security.access.AccessDeniedException("You do not have permission to update appointments for this hospital");
+        }
+
+        if (appointment.getStatus() == AppointmentStatus.CANCELLED) {
+            throw new IllegalStateException("Cannot update payment for a cancelled appointment");
+        }
+
+        if (appointment.getPaymentStatus() == PaymentStatus.COMPLETED) {
+            throw new IllegalStateException("Payment is already completed");
+        }
+
+        appointment.setPaymentStatus(request.getPaymentStatus());
+
+        return AppointmentResponseDto.builder()
+                .appointmentNumber(appointment.getAppointmentNumber())
+                .patientFullName(appointment.getPatient().getFullName())
+                .doctorName(appointment.getDoctor().getUser().getFullName())
+                .hospitalName(appointment.getHospital().getName())
+                .appointmentDate(appointment.getAppointmentDate())
+                .slotTime(appointment.getTimeSlot().getSlotTime())
+                .consultationFee(appointment.getPaymentAmount())
+                .status(appointment.getStatus())
+                .paymentStatus(appointment.getPaymentStatus())
+                .createdAt(appointment.getCreatedAt())
+                .build();
+    }
 }

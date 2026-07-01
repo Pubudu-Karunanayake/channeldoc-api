@@ -31,6 +31,7 @@ public class DailySessionServiceImpl implements DailySessionService {
 
     private final DailySessionRepository dailySessionRepository;
     private final AppointmentRepository appointmentRepository;
+    private final com.medisync.channeldoc_api.repository.TimeSlotRepository timeSlotRepository;
     private final SessionCancellationProducer sessionCancellationProducer;
 
     @Override
@@ -127,6 +128,57 @@ public class DailySessionServiceImpl implements DailySessionService {
                 .sessionDate(session.getSessionDate())
                 .status(session.getStatus())
                 .build();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<com.medisync.channeldoc_api.dto.response.TimeSlotResponseDto> getTimeSlotsForSession(Long sessionId, User user) {
+        DailySession dailySession = dailySessionRepository.findById(sessionId)
+                .orElseThrow(() -> new ResourceNotFoundException("Daily session not found with id: " + sessionId));
+
+        if (user.getRoles().contains(com.medisync.channeldoc_api.model.enums.UserRole.ROLE_HOSPITAL_ADMIN)) {
+            Hospital userHospital = user.getHospital();
+            if (userHospital == null || !userHospital.getId().equals(dailySession.getHospital().getId())) {
+                throw new AccessDeniedException("You do not have permission to access time slots for this hospital's session");
+            }
+        }
+
+        List<com.medisync.channeldoc_api.model.TimeSlot> timeSlots = timeSlotRepository.findByDailySessionIdOrderBySlotTimeAsc(sessionId);
+
+        return timeSlots.stream().map(ts -> com.medisync.channeldoc_api.dto.response.TimeSlotResponseDto.builder()
+                .id(ts.getId())
+                .slotTime(ts.getSlotTime())
+                .status(Boolean.TRUE.equals(ts.getIsBooked()) ? "BOOKED" : "AVAILABLE")
+                .build()
+        ).collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<com.medisync.channeldoc_api.dto.response.AppointmentResponseDto> getAppointmentsForSession(Long sessionId, User user) {
+        DailySession dailySession = dailySessionRepository.findById(sessionId)
+                .orElseThrow(() -> new ResourceNotFoundException("Daily session not found with id: " + sessionId));
+
+        Hospital userHospital = user.getHospital();
+        if (userHospital == null || !userHospital.getId().equals(dailySession.getHospital().getId())) {
+            throw new AccessDeniedException("You do not have permission to access appointments for this hospital's session");
+        }
+
+        List<Appointment> appointments = appointmentRepository.findAppointmentsByDailySessionId(sessionId);
+
+        return appointments.stream().map(a -> com.medisync.channeldoc_api.dto.response.AppointmentResponseDto.builder()
+                .appointmentNumber(a.getAppointmentNumber())
+                .patientFullName(a.getPatient().getFullName())
+                .doctorName(a.getDoctor().getUser().getFullName())
+                .hospitalName(a.getHospital().getName())
+                .appointmentDate(a.getAppointmentDate())
+                .slotTime(a.getTimeSlot().getSlotTime())
+                .consultationFee(a.getPaymentAmount())
+                .status(a.getStatus())
+                .paymentStatus(a.getPaymentStatus())
+                .createdAt(a.getCreatedAt())
+                .build()
+        ).collect(Collectors.toList());
     }
 }
 

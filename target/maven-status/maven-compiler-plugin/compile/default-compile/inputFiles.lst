@@ -25,10 +25,12 @@
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/dto/request/HospitalUpdateRequestDto.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/dto/request/MasterScheduleRequestDto.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/dto/request/PatientRegistrationRequestDto.java
+/home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/dto/request/PaymentStatusUpdateRequestDto.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/dto/request/UserRequestDto.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/dto/response/AppointmentResponseDto.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/dto/response/AuthResponseDto.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/dto/response/DailySessionResponseDto.java
+/home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/dto/response/DoctorAvailabilityResponseDto.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/dto/response/DoctorMonthlyIncomeResponseDto.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/dto/response/DoctorProfileResponseDto.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/dto/response/DoctorResponseDto.java
@@ -43,6 +45,7 @@
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/dto/response/PatientAppointmentHistoryResponseDto.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/dto/response/PatientProfileResponseDto.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/dto/response/RestPage.java
+/home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/dto/response/TimeSlotResponseDto.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/dto/response/UserProfileResponseDto.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/dto/response/UserResponseDto.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/event/AppointmentBookedEvent.java

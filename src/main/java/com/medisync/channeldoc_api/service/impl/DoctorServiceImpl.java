@@ -46,6 +46,7 @@ public class DoctorServiceImpl implements DoctorService {
     private final DoctorProfileRepository doctorProfileRepository;
     private final MasterScheduleRepository masterScheduleRepository;
     private final AppointmentRepository appointmentRepository;
+    private final com.medisync.channeldoc_api.repository.DailySessionRepository dailySessionRepository;
 
     @Override
     @Transactional
@@ -239,5 +240,29 @@ public class DoctorServiceImpl implements DoctorService {
                 .hospitalName(hospital != null ? hospital.getName() : null)
                 .profileImageUrl(user.getProfileImageUrl())
                 .build();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<com.medisync.channeldoc_api.dto.response.DoctorAvailabilityResponseDto> getDoctorAvailability(Long doctorId) {
+        if (!doctorProfileRepository.existsById(doctorId)) {
+            throw new ResourceNotFoundException("Doctor not found with id: " + doctorId);
+        }
+
+        LocalDate startDate = LocalDate.now();
+        LocalDate endDate = startDate.plusDays(14);
+
+        List<com.medisync.channeldoc_api.model.DailySession> sessions = dailySessionRepository.findAvailableSessionsForDoctor(
+                doctorId, startDate, endDate, com.medisync.channeldoc_api.model.enums.SessionStatus.ACTIVE);
+
+        return sessions.stream()
+                .map(session -> com.medisync.channeldoc_api.dto.response.DoctorAvailabilityResponseDto.builder()
+                        .dailySessionId(session.getId())
+                        .sessionDate(session.getSessionDate())
+                        .hospitalName(session.getHospital().getName())
+                        .hospitalAddress(session.getHospital().getAddress())
+                        .hospitalContactNumber(session.getHospital().getContactNumber())
+                        .build())
+                .collect(java.util.stream.Collectors.toList());
     }
 }

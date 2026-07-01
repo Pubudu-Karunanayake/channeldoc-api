@@ -84,5 +84,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
            "WHERE a.patient.id = :patientId")
     org.springframework.data.domain.Page<com.medisync.channeldoc_api.dto.response.PatientAppointmentHistoryResponseDto> findAppointmentHistoryByPatientId(
             @Param("patientId") Long patientId, org.springframework.data.domain.Pageable pageable);
+
+    @Query("SELECT a FROM Appointment a JOIN FETCH a.timeSlot ts JOIN FETCH a.patient p WHERE ts.dailySession.id = :sessionId")
+    List<Appointment> findAppointmentsByDailySessionId(@Param("sessionId") Long sessionId);
 }
 

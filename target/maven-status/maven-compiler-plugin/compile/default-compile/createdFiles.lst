@@ -74,6 +74,7 @@ com/medisync/channeldoc_api/repository/MasterScheduleRepository.class
 com/medisync/channeldoc_api/dto/response/HospitalAdminResponseDto.class
 com/medisync/channeldoc_api/dto/response/DailySessionResponseDto.class
 com/medisync/channeldoc_api/dto/response/HospitalAdminResponseDto$HospitalAdminResponseDtoBuilder.class
+com/medisync/channeldoc_api/dto/response/DoctorAvailabilityResponseDto$DoctorAvailabilityResponseDtoBuilder.class
 com/medisync/channeldoc_api/repository/DailySessionRepository.class
 com/medisync/channeldoc_api/service/strategy/UserProfileStrategy.class
 com/medisync/channeldoc_api/controller/DoctorController.class
@@ -103,6 +104,7 @@ com/medisync/channeldoc_api/service/MasterScheduleService.class
 com/medisync/channeldoc_api/model/DoctorProfile$DoctorProfileBuilder.class
 com/medisync/channeldoc_api/controller/HospitalController.class
 com/medisync/channeldoc_api/service/impl/EmailNotificationServiceImpl.class
+com/medisync/channeldoc_api/dto/request/PaymentStatusUpdateRequestDto.class
 com/medisync/channeldoc_api/service/impl/HospitalServiceImpl.class
 com/medisync/channeldoc_api/dto/response/DoctorResponseDto.class
 com/medisync/channeldoc_api/service/strategy/impl/DefaultProfileStrategy.class
@@ -112,12 +114,14 @@ com/medisync/channeldoc_api/service/impl/HospitalAdminServiceImpl.class
 com/medisync/channeldoc_api/service/impl/UserServiceImpl.class
 com/medisync/channeldoc_api/bootstrap/AdminSeeder.class
 com/medisync/channeldoc_api/ChanneldocApiApplication.class
+com/medisync/channeldoc_api/dto/response/TimeSlotResponseDto$TimeSlotResponseDtoBuilder.class
 com/medisync/channeldoc_api/dto/response/DoctorSearchResponseDto$DoctorSearchResponseDtoBuilder.class
 com/medisync/channeldoc_api/exception/ErrorResponse$ErrorResponseBuilder.class
 com/medisync/channeldoc_api/dto/request/DoctorRequestDto.class
 com/medisync/channeldoc_api/service/AppointmentBookingService.class
 com/medisync/channeldoc_api/controller/UserController.class
 com/medisync/channeldoc_api/exception/UserAlreadyExistsException.class
+com/medisync/channeldoc_api/dto/response/DoctorAvailabilityResponseDto.class
 com/medisync/channeldoc_api/model/enums/Gender.class
 com/medisync/channeldoc_api/service/HospitalAdminService.class
 com/medisync/channeldoc_api/service/strategy/UserProfileStrategyFactory.class
@@ -140,6 +144,7 @@ com/medisync/channeldoc_api/controller/AdminHospitalController.class
 com/medisync/channeldoc_api/exception/GlobalExceptionHandler.class
 com/medisync/channeldoc_api/model/DailySession.class
 com/medisync/channeldoc_api/config/RabbitMQConfig.class
+com/medisync/channeldoc_api/dto/response/TimeSlotResponseDto.class
 com/medisync/channeldoc_api/dto/response/DoctorMonthlyIncomeResponseDto.class
 com/medisync/channeldoc_api/dto/response/PatientProfileResponseDto.class
 com/medisync/channeldoc_api/dto/response/PatientProfileResponseDto$PatientProfileResponseDtoBuilder.class

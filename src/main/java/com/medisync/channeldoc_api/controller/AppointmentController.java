@@ -30,4 +30,14 @@ public class AppointmentController {
         AppointmentResponseDto response = appointmentBookingService.bookAppointment(request, user);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
+    @org.springframework.web.bind.annotation.PatchMapping("/{appointmentId}/payment-status")
+    @PreAuthorize("hasRole('HOSPITAL_ADMIN')")
+    public ResponseEntity<AppointmentResponseDto> updatePaymentStatus(
+            @org.springframework.web.bind.annotation.PathVariable Long appointmentId,
+            @Valid @RequestBody com.medisync.channeldoc_api.dto.request.PaymentStatusUpdateRequestDto request,
+            @AuthenticationPrincipal User user) {
+        AppointmentResponseDto response = appointmentBookingService.updatePaymentStatus(appointmentId, request, user);
+        return ResponseEntity.ok(response);
+    }
 }
