@@ -10,6 +10,7 @@ import com.medisync.channeldoc_api.model.enums.AuthProvider;
 import com.medisync.channeldoc_api.model.enums.UserRole;
 import com.medisync.channeldoc_api.repository.UserRepository;
 import com.medisync.channeldoc_api.security.JwtService;
+import com.medisync.channeldoc_api.security.TokenBlacklistService;
 import com.medisync.channeldoc_api.service.AuthService;
 import com.medisync.channeldoc_api.service.GoogleTokenVerifier;
 import com.medisync.channeldoc_api.service.PatientService;
@@ -27,6 +28,7 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final JwtService jwtService;
     private final PatientService patientService;
+    private final TokenBlacklistService tokenBlacklistService;
 
     @Override
     @Transactional
@@ -62,6 +64,21 @@ public class AuthServiceImpl implements AuthService {
 
         // 4. Build response
         return buildAuthResponse(token, savedUser);
+    }
+
+    @Override
+    public void logout(String token) {
+        if (token == null || token.trim().isEmpty()) {
+            return;
+        }
+
+        long remainingTime = jwtService.getRemainingExpirationTime(token);
+        if (remainingTime > 0) {
+            tokenBlacklistService.blacklistToken(token, remainingTime);
+            log.info("Token blacklisted successfully");
+        } else {
+            log.debug("Token already expired or invalid during logout");
+        }
     }
 
     private User updateExistingUser(User user, String fullName, String pictureUrl, String googleId) {

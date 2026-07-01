@@ -75,6 +75,28 @@ public class JwtService {
     }
 
     /**
+     * Extracts the expiration date from a valid JWT.
+     */
+    public Date getExpirationDateFromToken(String token) {
+        Claims claims = validateToken(token);
+        return claims.getExpiration();
+    }
+
+    /**
+     * Calculates the remaining expiration time in milliseconds.
+     * Returns 0 if the token is already expired or if the remaining time is negative.
+     */
+    public long getRemainingExpirationTime(String token) {
+        try {
+            Date expirationDate = getExpirationDateFromToken(token);
+            long timeRemaining = expirationDate.getTime() - System.currentTimeMillis();
+            return Math.max(0, timeRemaining);
+        } catch (JwtException e) {
+            return 0; // Token is invalid or expired
+        }
+    }
+
+    /**
      * Checks if a token is valid without throwing exceptions.
      */
     public boolean isTokenValid(String token) {
