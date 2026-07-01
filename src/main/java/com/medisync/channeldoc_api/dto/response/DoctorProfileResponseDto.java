@@ -1,21 +1,18 @@
 package com.medisync.channeldoc_api.dto.response;
 
-import com.medisync.channeldoc_api.model.enums.Gender;
+import com.medisync.channeldoc_api.model.enums.Specialization;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
-
 @Data
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class PatientProfileResponseDto extends UserProfileResponseDto {
-    private LocalDate dateOfBirth;
-    private Gender gender;
-    private String contactNumber;
+public class DoctorProfileResponseDto extends UserProfileResponseDto {
+    private String slmcNumber;
+    private Specialization specialization;
 }
