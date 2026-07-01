@@ -116,4 +116,36 @@ public class HospitalServiceImpl implements HospitalService {
                 .management(partitionedStaff.get(false))
                 .build();
     }
+
+    @Override
+    @org.springframework.transaction.annotation.Transactional
+    public com.medisync.channeldoc_api.dto.response.UserProfileResponseDto updateHospitalStaff(Long staffId, com.medisync.channeldoc_api.dto.request.HospitalStaffUpdateRequestDto request) {
+        com.medisync.channeldoc_api.model.User user = userRepository.findById(staffId)
+                .orElseThrow(() -> new ResourceNotFoundException("Staff member not found with id: " + staffId));
+
+        boolean isStaff = user.getRoles().contains(com.medisync.channeldoc_api.model.enums.UserRole.ROLE_HOSPITAL_ADMIN)
+                || user.getRoles().contains(com.medisync.channeldoc_api.model.enums.UserRole.ROLE_HOSPITAL_MANAGEMENT);
+
+        if (!isStaff) {
+            throw new IllegalArgumentException("User is not a hospital staff member.");
+        }
+
+        if (!user.getEmail().equals(request.getEmail()) && userRepository.existsByEmail(request.getEmail())) {
+            throw new IllegalArgumentException("Email is already in use by another user.");
+        }
+
+        if (user.getHospital() == null || !user.getHospital().getId().equals(request.getHospitalId())) {
+            Hospital newHospital = hospitalRepository.findById(request.getHospitalId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Hospital not found with id: " + request.getHospitalId()));
+            user.setHospital(newHospital);
+        }
+
+        user.setFullName(request.getFullName());
+        user.setEmail(request.getEmail());
+        user.setIsActive(request.getIsActive());
+
+        com.medisync.channeldoc_api.model.User updatedUser = userRepository.save(user);
+
+        return userProfileStrategyFactory.getStrategy(updatedUser.getRoles()).getProfile(updatedUser);
+    }
 }

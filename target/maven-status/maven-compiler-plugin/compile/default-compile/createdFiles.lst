@@ -123,7 +123,9 @@ com/medisync/channeldoc_api/service/HospitalAdminService.class
 com/medisync/channeldoc_api/service/strategy/UserProfileStrategyFactory.class
 com/medisync/channeldoc_api/dto/request/MasterScheduleRequestDto.class
 com/medisync/channeldoc_api/service/impl/MasterScheduleServiceImpl.class
+com/medisync/channeldoc_api/dto/request/HospitalStaffUpdateRequestDto$HospitalStaffUpdateRequestDtoBuilder.class
 com/medisync/channeldoc_api/dto/request/AppointmentBookingRequestDto$AppointmentBookingRequestDtoBuilder.class
+com/medisync/channeldoc_api/dto/request/HospitalStaffUpdateRequestDto.class
 com/medisync/channeldoc_api/dto/response/MasterScheduleResponseDto.class
 com/medisync/channeldoc_api/service/HospitalService.class
 com/medisync/channeldoc_api/model/TimeSlot.class

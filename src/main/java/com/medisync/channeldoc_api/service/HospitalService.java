@@ -19,4 +19,6 @@ public interface HospitalService {
     void deleteHospital(Long id);
 
     HospitalStaffResponseDto getHospitalStaff(Long hospitalId);
+
+    com.medisync.channeldoc_api.dto.response.UserProfileResponseDto updateHospitalStaff(Long staffId, com.medisync.channeldoc_api.dto.request.HospitalStaffUpdateRequestDto request);
 }
