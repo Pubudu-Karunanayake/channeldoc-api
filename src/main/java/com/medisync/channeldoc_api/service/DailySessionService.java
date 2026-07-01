@@ -10,4 +10,6 @@ public interface DailySessionService {
     List<DailySessionResponseDto> getDailySessions(LocalDate date, Long masterScheduleId, User user);
 
     DailySessionResponseDto cancelDailySession(Long sessionId, User user);
+
+    List<com.medisync.channeldoc_api.dto.response.TimeSlotResponseDto> getTimeSlotsForSession(Long sessionId, User user);
 }
