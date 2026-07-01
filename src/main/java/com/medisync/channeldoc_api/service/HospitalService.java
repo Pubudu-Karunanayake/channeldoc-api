@@ -11,4 +11,8 @@ public interface HospitalService {
     List<HospitalResponseDto> getAllHospitals();
 
     HospitalResponseDto getHospitalById(Long id);
+
+    HospitalResponseDto updateHospital(Long id, com.medisync.channeldoc_api.dto.request.HospitalUpdateRequestDto request);
+
+    void deleteHospital(Long id);
 }

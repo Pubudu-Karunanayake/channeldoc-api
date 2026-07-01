@@ -58,4 +58,33 @@ public class HospitalServiceImpl implements HospitalService {
                 .contactNumber(hospital.getContactNumber())
                 .build();
     }
+
+    @Override
+    @org.springframework.transaction.annotation.Transactional
+    public HospitalResponseDto updateHospital(Long id, com.medisync.channeldoc_api.dto.request.HospitalUpdateRequestDto request) {
+        Hospital hospital = hospitalRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Hospital not found with id: " + id));
+
+        hospital.setName(request.getName());
+        hospital.setAddress(request.getAddress());
+        hospital.setContactNumber(request.getContactNumber());
+
+        Hospital updatedHospital = hospitalRepository.save(hospital);
+
+        return HospitalResponseDto.builder()
+                .id(updatedHospital.getId())
+                .name(updatedHospital.getName())
+                .address(updatedHospital.getAddress())
+                .contactNumber(updatedHospital.getContactNumber())
+                .build();
+    }
+
+    @Override
+    @org.springframework.transaction.annotation.Transactional
+    public void deleteHospital(Long id) {
+        if (!hospitalRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Hospital not found with id: " + id);
+        }
+        hospitalRepository.deleteById(id);
+    }
 }

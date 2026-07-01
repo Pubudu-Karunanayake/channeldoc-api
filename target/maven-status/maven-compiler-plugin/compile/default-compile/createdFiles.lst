@@ -21,12 +21,14 @@ com/medisync/channeldoc_api/dto/request/HospitalRequestDto$HospitalRequestDtoBui
 com/medisync/channeldoc_api/messaging/producer/SessionCancellationProducer.class
 com/medisync/channeldoc_api/model/User$UserBuilder.class
 com/medisync/channeldoc_api/dto/request/HospitalManagementRequestDto.class
+com/medisync/channeldoc_api/dto/request/HospitalUpdateRequestDto.class
 com/medisync/channeldoc_api/messaging/consumer/SessionCancellationConsumer.class
 com/medisync/channeldoc_api/model/TimeSlot$TimeSlotBuilder.class
 com/medisync/channeldoc_api/event/AppointmentBookedEvent.class
 com/medisync/channeldoc_api/controller/MasterScheduleController.class
 com/medisync/channeldoc_api/repository/UserRepository.class
 com/medisync/channeldoc_api/service/impl/SessionGenerationServiceImpl.class
+com/medisync/channeldoc_api/dto/request/HospitalUpdateRequestDto$HospitalUpdateRequestDtoBuilder.class
 com/medisync/channeldoc_api/model/Hospital$HospitalBuilder.class
 com/medisync/channeldoc_api/model/Hospital.class
 com/medisync/channeldoc_api/dto/response/AppointmentResponseDto$AppointmentResponseDtoBuilder.class
