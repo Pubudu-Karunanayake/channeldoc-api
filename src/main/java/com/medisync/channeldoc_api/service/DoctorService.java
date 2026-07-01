@@ -23,5 +23,7 @@ public interface DoctorService {
     List<com.medisync.channeldoc_api.dto.response.DoctorMonthlyIncomeResponseDto> getMonthlyIncomeAnalysis(User user, int year, int month);
 
     List<com.medisync.channeldoc_api.dto.response.DoctorAvailabilityResponseDto> getDoctorAvailability(Long doctorId);
+
+    List<DoctorSearchResponseDto> getDoctorsByHospitalId(Long hospitalId, User user);
 }
 

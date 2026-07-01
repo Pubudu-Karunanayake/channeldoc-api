@@ -73,5 +73,14 @@ public class DoctorController {
         List<com.medisync.channeldoc_api.dto.response.DoctorAvailabilityResponseDto> availability = doctorService.getDoctorAvailability(doctorId);
         return ResponseEntity.ok(availability);
     }
+
+    @GetMapping("/hospital/{hospitalId}")
+    @PreAuthorize("hasAnyRole('HOSPITAL_MANAGEMENT', 'HOSPITAL_ADMIN')")
+    public ResponseEntity<List<DoctorSearchResponseDto>> getDoctorsByHospitalId(
+            @PathVariable Long hospitalId,
+            @AuthenticationPrincipal User user) {
+        List<DoctorSearchResponseDto> doctors = doctorService.getDoctorsByHospitalId(hospitalId, user);
+        return ResponseEntity.ok(doctors);
+    }
 }
 

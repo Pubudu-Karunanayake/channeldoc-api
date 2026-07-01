@@ -22,4 +22,6 @@ public interface DoctorProfileRepository extends JpaRepository<DoctorProfile, Lo
            "LEFT JOIN FETCH u.hospital " +
            "WHERE LOWER(u.fullName) LIKE LOWER(CONCAT('%', :name, '%'))")
     List<DoctorProfile> searchByUserFullName(@Param("name") String name);
+
+    List<DoctorProfile> findByUserHospitalId(Long hospitalId);
 }
