@@ -6,4 +6,6 @@ import com.medisync.channeldoc_api.model.User;
 
 public interface AppointmentBookingService {
     AppointmentResponseDto bookAppointment(AppointmentBookingRequestDto request, User user);
+
+    AppointmentResponseDto updatePaymentStatus(Long appointmentId, com.medisync.channeldoc_api.dto.request.PaymentStatusUpdateRequestDto request, User user);
 }

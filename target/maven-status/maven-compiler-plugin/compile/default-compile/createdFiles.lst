@@ -104,6 +104,7 @@ com/medisync/channeldoc_api/service/MasterScheduleService.class
 com/medisync/channeldoc_api/model/DoctorProfile$DoctorProfileBuilder.class
 com/medisync/channeldoc_api/controller/HospitalController.class
 com/medisync/channeldoc_api/service/impl/EmailNotificationServiceImpl.class
+com/medisync/channeldoc_api/dto/request/PaymentStatusUpdateRequestDto.class
 com/medisync/channeldoc_api/service/impl/HospitalServiceImpl.class
 com/medisync/channeldoc_api/dto/response/DoctorResponseDto.class
 com/medisync/channeldoc_api/service/strategy/impl/DefaultProfileStrategy.class
