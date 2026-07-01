@@ -14,7 +14,10 @@ import com.medisync.channeldoc_api.service.SessionGenerationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.access.AccessDeniedException;
 
+import java.util.List;
+import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class MasterScheduleServiceImpl implements MasterScheduleService {
@@ -50,16 +53,35 @@ public class MasterScheduleServiceImpl implements MasterScheduleService {
         // Trigger initial 14-day session generation
         sessionGenerationService.generateSessionsForSchedule(savedSchedule, 14);
 
+        return mapToResponseDto(savedSchedule);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<MasterScheduleResponseDto> getSchedulesByHospitalId(Long hospitalId, User user) {
+        Hospital userHospital = user.getHospital();
+        if (userHospital == null || !userHospital.getId().equals(hospitalId)) {
+            throw new AccessDeniedException("You do not have permission to access schedules for this hospital.");
+        }
+
+        List<MasterSchedule> schedules = masterScheduleRepository.findByHospitalIdAndIsActiveTrue(hospitalId);
+
+        return schedules.stream()
+                .map(this::mapToResponseDto)
+                .collect(Collectors.toList());
+    }
+
+    private MasterScheduleResponseDto mapToResponseDto(MasterSchedule masterSchedule) {
         return MasterScheduleResponseDto.builder()
-                .id(savedSchedule.getId())
-                .hospitalId(savedSchedule.getHospital().getId())
-                .doctorId(savedSchedule.getDoctor().getId())
-                .day(savedSchedule.getDay())
-                .startTime(savedSchedule.getStartTime())
-                .endTime(savedSchedule.getEndTime())
-                .timePerPatient(savedSchedule.getTimePerPatient())
-                .consultationFee(savedSchedule.getConsultationFee())
-                .hospitalSharePercentage(savedSchedule.getHospitalSharePercentage())
+                .id(masterSchedule.getId())
+                .hospitalId(masterSchedule.getHospital().getId())
+                .doctorId(masterSchedule.getDoctor().getId())
+                .day(masterSchedule.getDay())
+                .startTime(masterSchedule.getStartTime())
+                .endTime(masterSchedule.getEndTime())
+                .timePerPatient(masterSchedule.getTimePerPatient())
+                .consultationFee(masterSchedule.getConsultationFee())
+                .hospitalSharePercentage(masterSchedule.getHospitalSharePercentage())
                 .build();
     }
 }

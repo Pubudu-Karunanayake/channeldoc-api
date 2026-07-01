@@ -12,5 +12,7 @@ public interface MasterScheduleRepository extends JpaRepository<MasterSchedule, 
     List<MasterSchedule> findByDayAndIsActiveTrue(Day day);
 
     List<MasterSchedule> findByDoctorIdAndIsActiveTrue(Long doctorId);
+
+    List<MasterSchedule> findByHospitalIdAndIsActiveTrue(Long hospitalId);
 }
 
