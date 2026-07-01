@@ -1,6 +1,7 @@
 package com.medisync.channeldoc_api.controller;
 
 import com.medisync.channeldoc_api.dto.response.DailySessionResponseDto;
+import com.medisync.channeldoc_api.dto.response.AppointmentResponseDto;
 import com.medisync.channeldoc_api.dto.response.TimeSlotResponseDto;
 import com.medisync.channeldoc_api.model.User;
 import com.medisync.channeldoc_api.service.DailySessionService;
@@ -49,5 +50,14 @@ public class DailySessionController {
             @AuthenticationPrincipal User user) {
         List<TimeSlotResponseDto> timeSlots = dailySessionService.getTimeSlotsForSession(sessionId, user);
         return ResponseEntity.ok(timeSlots);
+    }
+
+    @GetMapping("/{sessionId}/appointments")
+    @PreAuthorize("hasRole('HOSPITAL_ADMIN')")
+    public ResponseEntity<List<AppointmentResponseDto>> getAppointmentsForSession(
+            @PathVariable Long sessionId,
+            @AuthenticationPrincipal User user) {
+        List<AppointmentResponseDto> appointments = dailySessionService.getAppointmentsForSession(sessionId, user);
+        return ResponseEntity.ok(appointments);
     }
 }

@@ -17,6 +17,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 public class AppointmentResponseDto {
     private String appointmentNumber;
+    private String patientFullName;
     private String doctorName;
     private String hospitalName;
     private LocalDate appointmentDate;

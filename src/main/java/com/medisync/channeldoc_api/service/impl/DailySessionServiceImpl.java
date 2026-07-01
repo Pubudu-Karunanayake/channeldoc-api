@@ -152,5 +152,33 @@ public class DailySessionServiceImpl implements DailySessionService {
                 .build()
         ).collect(Collectors.toList());
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<com.medisync.channeldoc_api.dto.response.AppointmentResponseDto> getAppointmentsForSession(Long sessionId, User user) {
+        DailySession dailySession = dailySessionRepository.findById(sessionId)
+                .orElseThrow(() -> new ResourceNotFoundException("Daily session not found with id: " + sessionId));
+
+        Hospital userHospital = user.getHospital();
+        if (userHospital == null || !userHospital.getId().equals(dailySession.getHospital().getId())) {
+            throw new AccessDeniedException("You do not have permission to access appointments for this hospital's session");
+        }
+
+        List<Appointment> appointments = appointmentRepository.findAppointmentsByDailySessionId(sessionId);
+
+        return appointments.stream().map(a -> com.medisync.channeldoc_api.dto.response.AppointmentResponseDto.builder()
+                .appointmentNumber(a.getAppointmentNumber())
+                .patientFullName(a.getPatient().getFullName())
+                .doctorName(a.getDoctor().getUser().getFullName())
+                .hospitalName(a.getHospital().getName())
+                .appointmentDate(a.getAppointmentDate())
+                .slotTime(a.getTimeSlot().getSlotTime())
+                .consultationFee(a.getPaymentAmount())
+                .status(a.getStatus())
+                .paymentStatus(a.getPaymentStatus())
+                .createdAt(a.getCreatedAt())
+                .build()
+        ).collect(Collectors.toList());
+    }
 }
 
