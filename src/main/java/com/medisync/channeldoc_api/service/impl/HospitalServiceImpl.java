@@ -8,6 +8,8 @@ import com.medisync.channeldoc_api.service.HospitalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import com.medisync.channeldoc_api.exception.ResourceNotFoundException;
+
 @Service
 @RequiredArgsConstructor
 public class HospitalServiceImpl implements HospitalService {
@@ -42,5 +44,18 @@ public class HospitalServiceImpl implements HospitalService {
                         .contactNumber(hospital.getContactNumber())
                         .build())
                 .toList();
+    }
+
+    @Override
+    public HospitalResponseDto getHospitalById(Long id) {
+        Hospital hospital = hospitalRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Hospital not found with id: " + id));
+
+        return HospitalResponseDto.builder()
+                .id(hospital.getId())
+                .name(hospital.getName())
+                .address(hospital.getAddress())
+                .contactNumber(hospital.getContactNumber())
+                .build();
     }
 }

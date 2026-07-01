@@ -3,6 +3,7 @@
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/config/AsyncConfig.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/config/RabbitMQConfig.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/config/RedisConfig.java
+/home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/controller/AdminHospitalController.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/controller/AppointmentController.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/controller/AuthController.java
 /home/pubudu/Desktop/Projects/channeldoc-api/src/main/java/com/medisync/channeldoc_api/controller/DailySessionController.java

@@ -9,4 +9,6 @@ public interface HospitalService {
     HospitalResponseDto createHospital(HospitalRequestDto requestDto);
     
     List<HospitalResponseDto> getAllHospitals();
+
+    HospitalResponseDto getHospitalById(Long id);
 }

@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.medisync.channeldoc_api.model.User;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
+
 @RestController
 @RequestMapping("/api/hospitals")
 @RequiredArgsConstructor
@@ -27,10 +31,20 @@ public class HospitalController {
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 
-    @org.springframework.web.bind.annotation.GetMapping
+    @GetMapping
     @PreAuthorize("hasRole('SUPER_ADMIN')")
     public ResponseEntity<java.util.List<HospitalResponseDto>> getAllHospitals() {
         java.util.List<HospitalResponseDto> hospitals = hospitalService.getAllHospitals();
         return ResponseEntity.ok(hospitals);
+    }
+
+    @GetMapping("/my-hospital")
+    @PreAuthorize("hasRole('HOSPITAL_ADMIN')")
+    public ResponseEntity<HospitalResponseDto> getMyHospitalDetails(@AuthenticationPrincipal User user) {
+        if (user.getHospital() == null) {
+            throw new IllegalStateException("User is not associated with any hospital");
+        }
+        HospitalResponseDto hospital = hospitalService.getHospitalById(user.getHospital().getId());
+        return ResponseEntity.ok(hospital);
     }
 }
