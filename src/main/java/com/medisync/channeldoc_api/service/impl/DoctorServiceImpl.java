@@ -35,6 +35,7 @@ import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import org.springframework.security.access.AccessDeniedException;
 
 @Service
 @RequiredArgsConstructor
@@ -263,6 +264,21 @@ public class DoctorServiceImpl implements DoctorService {
                         .hospitalAddress(session.getHospital().getAddress())
                         .hospitalContactNumber(session.getHospital().getContactNumber())
                         .build())
+                .collect(java.util.stream.Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<DoctorSearchResponseDto> getDoctorsByHospitalId(Long hospitalId, User user) {
+        Hospital userHospital = user.getHospital();
+        if (userHospital == null || !userHospital.getId().equals(hospitalId)) {
+            throw new AccessDeniedException("You do not have permission to access doctors for this hospital.");
+        }
+
+        List<DoctorProfile> doctors = doctorProfileRepository.findByUserHospitalId(hospitalId);
+
+        return doctors.stream()
+                .map(this::mapToSearchDto)
                 .collect(java.util.stream.Collectors.toList());
     }
 }
